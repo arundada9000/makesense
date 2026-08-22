@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { useModelStore } from "@/stores/model-store";
 import { CommandPalette } from "@/components/command-palette";
+import { KeyboardShortcuts } from "@/components/keyboard-shortcuts";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -51,6 +52,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-dvh">
       <CommandPalette />
+      <KeyboardShortcuts />
       <Sidebar pathname={pathname} />
       <MobileNav pathname={pathname} />
       <main

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AppShell, StoreHydration } from "@/components/shell/app-shell";
+import { ServiceWorkerRegistration } from "@/components/service-worker";
 import "./globals.css";
 
 const geistSans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
@@ -50,6 +51,7 @@ export default function RootLayout({
             <AppShell>{children}</AppShell>
           </StoreHydration>
         </ThemeProvider>
+        <ServiceWorkerRegistration />
       </body>
     </html>
   );
