@@ -10,8 +10,10 @@ import {
   Settings,
   Plus,
   LineChart,
+  Search,
 } from "lucide-react";
 import { useModelStore } from "@/stores/model-store";
+import { CommandPalette } from "@/components/command-palette";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -48,6 +50,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-dvh">
+      <CommandPalette />
       <Sidebar pathname={pathname} />
       <MobileNav pathname={pathname} />
       <main
@@ -108,6 +111,21 @@ function Sidebar({ pathname }: { pathname: string }) {
         >
           <Plus className="h-4 w-4" />
           New model
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            window.dispatchEvent(
+              new KeyboardEvent("keydown", { key: "k", ctrlKey: true })
+            )
+          }
+          className="mt-2 flex h-9 w-full items-center gap-2 rounded-[var(--radius-base)] border border-border px-3 text-xs text-muted-foreground transition-colors hover:bg-surface-secondary hover:text-foreground"
+        >
+          <Search className="h-3.5 w-3.5" />
+          Search
+          <kbd className="ml-auto rounded border border-border bg-surface-secondary px-1 py-0.5 text-[10px]">
+            Ctrl K
+          </kbd>
         </button>
       </div>
 
