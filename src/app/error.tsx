@@ -27,7 +27,7 @@ export default function GlobalError({
       </h1>
       <p className="animate-rise d-2 mt-3 max-w-md text-pretty text-sm leading-relaxed text-muted-foreground">
         Something went wrong on this screen. Your models are safe on this
-        device — nothing was lost.
+        device; nothing was lost.
       </p>
       <div className="animate-rise d-3 mt-8 flex flex-wrap items-center justify-center gap-2.5">
         <button

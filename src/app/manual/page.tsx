@@ -88,7 +88,7 @@ export default function ManualPage() {
                 <strong>the app</strong> from any page header. On first launch,
                 MakeSense offers starter templates: digital product, SaaS,
                 consulting, e-commerce and more. A template is just a prefilled
-                model — every number is editable afterwards.
+                model, and every number is editable afterwards.
               </p>
               <p>
                 Prefer to start clean? Choose <code>Blank</code>. You can also
@@ -173,7 +173,7 @@ export default function ManualPage() {
                 </li>
               </ol>
               <p>
-                Every field saves as you type. There is nothing to press — the
+                Every field saves as you type. There is nothing to press: the
                 workspace recalculates instantly.
               </p>
             </DocSection>
@@ -184,7 +184,7 @@ export default function ManualPage() {
                 <li><strong>Cash flow tab:</strong> money in vs out, running cash balance, break-even month, and loan schedules.</li>
                 <li><strong>Unit economics strip:</strong> CAC, LTV, LTV:CAC ratio, payback months.</li>
                 <li>
-                  A value shown as <em>—</em> means it is not computable yet (for
+                  A value shown as <em>-</em> means it is not computable yet (for
                   example, break-even when the model never turns profitable),
                   not zero. Hover or tap for the reason.
                 </li>
@@ -195,7 +195,7 @@ export default function ManualPage() {
               <p>
                 The <strong>Scenarios</strong> tab lists Conservative, Expected
                 and Aggressive by default. Edit any scenario to override
-                specific assumptions — price, growth, churn, costs. The
+                specific assumptions: price, growth, churn, costs. The
                 comparison table re-simulates every scenario side by side.
               </p>
               <p>
@@ -247,7 +247,7 @@ export default function ManualPage() {
               </p>
               <p>
                 <strong>Compare</strong> selects multiple models and puts their
-                metrics in one factual table — useful when choosing between two
+                metrics in one factual table, useful when choosing between two
                 ideas or pricing structures.
               </p>
             </DocSection>
@@ -342,7 +342,7 @@ export default function ManualPage() {
                 <div>
                   <dt>Can I use it on my phone?</dt>
                   <dd>
-                    Yes — the layout adapts, including bottom navigation and
+                    Yes: the layout adapts, including bottom navigation and
                     touch-friendly charts.
                   </dd>
                 </div>
@@ -354,7 +354,7 @@ export default function ManualPage() {
                   </dd>
                 </div>
                 <div>
-                  <dt>Why does a metric show &ldquo;—&rdquo;?</dt>
+                  <dt>Why does a metric show a dash?</dt>
                   <dd>
                     It cannot be computed from current assumptions, often
                     because the model never breaks even within the horizon. Fix

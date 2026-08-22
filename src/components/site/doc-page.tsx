@@ -1,5 +1,6 @@
 import { SiteHeader } from "./site-header";
 import { SiteFooter } from "./site-footer";
+import { ScrollReveal } from "./scroll-reveal";
 
 /**
  * Shared chrome for static document pages: privacy, terms, manual.
@@ -45,11 +46,13 @@ export function DocSection({
   children: React.ReactNode;
 }) {
   return (
-    <section aria-labelledby={id} className="animate-rise d-1 scroll-mt-24" id={id}>
-      <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
-      <div className="mt-3 space-y-3 text-sm leading-relaxed text-muted-foreground [&_a]:font-medium [&_a]:text-accent [&_code]:rounded [&_code]:border [&_code]:border-border [&_code]:bg-surface-secondary [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-xs [&_strong]:text-foreground">
-        {children}
-      </div>
-    </section>
+    <ScrollReveal>
+      <section aria-labelledby={id} className="scroll-mt-24" id={id}>
+        <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
+        <div className="mt-3 space-y-3 text-sm leading-relaxed text-muted-foreground [&_a]:font-medium [&_a]:text-accent [&_code]:rounded [&_code]:border [&_code]:border-border [&_code]:bg-surface-secondary [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-xs [&_strong]:text-foreground">
+          {children}
+        </div>
+      </section>
+    </ScrollReveal>
   );
 }

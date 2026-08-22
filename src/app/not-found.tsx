@@ -16,14 +16,14 @@ export default function NotFound() {
         className="orb orb-a -top-24 left-1/2 h-72 w-72 -translate-x-1/2 bg-accent/20"
       />
       <p className="animate-rise-sm font-mono text-sm tracking-widest text-muted">
-        ERROR 404 — ASSETS NOT FOUND
+        ERROR 404: ASSETS NOT FOUND
       </p>
       <h1 className="animate-rise d-1 mt-3 text-balance text-3xl font-semibold tracking-tight md:text-5xl">
         This page went{" "}
         <span className="text-sheen">out of business</span>
       </h1>
       <p className="animate-rise d-2 mt-3 max-w-md text-pretty text-sm leading-relaxed text-muted-foreground">
-        The ledger has no record of it. Your money is safe — it was never here.
+        The ledger has no record of it. Your money is safe: it was never here.
       </p>
 
       <div aria-hidden="true" className="animate-rise d-3 mt-8 flex gap-3">

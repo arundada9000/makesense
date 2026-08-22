@@ -8,7 +8,7 @@ import { CALCULATOR_DIRECTORY } from "@/lib/calculator-directory";
 export const metadata: Metadata = {
   title: "All Calculators",
   description:
-    "Twelve free business calculators: break-even, profit margin, revenue, ROI, pricing, cash flow, runway, SaaS metrics, LTV:CAC, corporate tax and VAT — each with formulas explained.",
+    "Twelve free business calculators: break-even, profit margin, revenue, ROI, pricing, cash flow, runway, SaaS metrics, LTV:CAC, corporate tax and VAT, each with formulas explained.",
   alternates: { canonical: "/calculators" },
 };
 
@@ -68,7 +68,7 @@ export default function CalculatorsPage() {
           </h2>
           <p className="mt-1.5 max-w-xl text-xs leading-relaxed text-muted-foreground">
             The simulator links these calculations into one coherent model with
-            scenarios, sensitivity tables, financing schedules and tax — then
+            scenarios, sensitivity tables, financing schedules, and tax, then
             prints a report you can take to a bank or partner.
           </p>
           <Link

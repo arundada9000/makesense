@@ -26,7 +26,7 @@ export default function TermsPage() {
       <DocSection id="not-advice" title="Not financial, tax, or legal advice">
         <p>
           <strong>
-            Every output is a mathematical consequence of your assumptions — it
+            Every output is a mathematical consequence of your assumptions: it
             is not a prediction, forecast, or recommendation.
           </strong>{" "}
           Tax rules, exchange rates, market conditions and individual

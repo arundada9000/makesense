@@ -32,7 +32,7 @@ export default function PrivacyPage() {
         <p>
           Clearing your browser data for this site, or using{" "}
           <strong>Delete all data</strong> in Settings, removes everything
-          permanently. There is no cloud copy to fall back on — export a backup
+          permanently. There is no cloud copy to fall back on: export a backup
           file regularly if your models matter.
         </p>
       </DocSection>

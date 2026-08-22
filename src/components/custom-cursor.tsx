@@ -32,8 +32,14 @@ export function CustomCursor() {
     () => true
   );
 
+  const isAppRoute = APP_ROUTES.some((r) => pathname.startsWith(r));
+  const isEnabled = finePointer && motionAllowed && !isAppRoute;
+
   useEffect(() => {
-    if (!finePointer || !motionAllowed) return;
+    if (!isEnabled) {
+      delete document.documentElement.dataset.cursor;
+      return;
+    }
     document.documentElement.dataset.cursor = "custom";
 
     let raf = 0;
@@ -75,13 +81,9 @@ export function CustomCursor() {
       window.removeEventListener("pointermove", onMove);
       delete document.documentElement.dataset.cursor;
     };
-  }, [finePointer, motionAllowed]);
+  }, [isEnabled]);
 
-  if (
-    !finePointer ||
-    !motionAllowed ||
-    APP_ROUTES.some((r) => pathname.startsWith(r))
-  ) {
+  if (!isEnabled) {
     return null;
   }
 

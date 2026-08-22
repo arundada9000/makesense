@@ -138,7 +138,7 @@ export function ContextMenu() {
       )}
       <div role="separator" className="my-1 h-px bg-border" />
       <p className="px-3 pb-1 pt-0.5 text-[10px] leading-relaxed text-muted">
-        MakeSense — numbers that make sense
+        MakeSense: numbers that make sense
       </p>
     </div>
   );

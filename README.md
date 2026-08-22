@@ -6,6 +6,27 @@ MakeSense is a business model simulator for entrepreneurs. Turn a business idea 
 
 Live: https://makesensebusiness.vercel.app/
 
+## Screenshots
+
+![Dashboard](public/screenshots/dashboard.png)
+
+**Dashboard**: every model's year-one revenue, margin, runway and generated insights in one glance.
+
+![Cash flow workspace](public/screenshots/workspace-cashflow-dark.png)
+**Cash flow workspace (dark theme)**: month-by-month inflows, outflows and running balance with loan schedules.
+
+![Models gallery](public/screenshots/models.png)
+
+**Model gallery**: templates and saved models with summary metrics.
+
+![Report](public/screenshots/report.png)
+
+**Printable report**: a share-ready document generated from the model.
+
+![Break-even calculator](public/screenshots/calculator.png)
+
+**Standalone calculators**: twelve free calculators with formulas explained.
+
 ## What it does
 
 - Model any business: digital products, SaaS, consulting, e-commerce, marketplaces, enterprise deals, or hybrids.

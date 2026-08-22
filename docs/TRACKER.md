@@ -127,4 +127,19 @@ Last updated: 2026-08-22
 | Typecheck clean | Done | tsc --noEmit passes |
 | All tests passing | Done | 74 domain tests green |
 | Production build succeeds | Done | next build compiles 24 routes, static generation verified |
-| Docs finalized | Pending | |
+| Docs finalized | Done | specs, implementation plan, and tracker synchronized |
+
+## Phase 9: Product Enhancements & Landing Redesign
+
+| Item | Status | Notes |
+|---|---|---|
+| Custom cursor app route fix | Done | dataset.cursor cleanup synchronized on route transitions |
+| Header active state and hover polish | Done | usePathname with active route pills and hover transitions |
+| Footer socials and author links | Done | Added GitHub, Twitter/X, LinkedIn, Portfolio SVG links |
+| Text scroll reveal animations | Done | Lightweight intersection-observer ScrollReveal on doc pages |
+| Em-dash (—) cleanup | Done | Replaced all em dashes across documentation, meta, and UI copy |
+| Landing page hero and badge redesign | In Progress | Redesigning hero, craft badge, typography, and CTA |
+| Interactive product showcase | Not Started | Multi-tab interactive preview replacing static dashboard block |
+| Landing page motion and micro-interactions | Not Started | Subtle, performant Apple-grade animations and tickers |
+| Final verification and build test | Not Started | Ensure typecheck, tests, and build all green |
+
