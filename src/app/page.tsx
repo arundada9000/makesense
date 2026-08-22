@@ -149,6 +149,40 @@ export default function LandingPage() {
           </div>
         </section>
 
+        <section className="mx-auto w-full max-w-6xl px-4 pb-12 pt-12 md:px-6">
+          <h2 className="text-lg font-semibold tracking-tight">
+            Free standalone calculators
+          </h2>
+          <p className="mt-1.5 max-w-2xl text-xs leading-relaxed text-muted-foreground">
+            Quick answers for single questions, each with its formula explained.
+            The full app connects them into one model.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {[
+              ["Break-even", "/break-even-calculator"],
+              ["Profit margin", "/profit-calculator"],
+              ["Revenue projection", "/revenue-calculator"],
+              ["ROI", "/roi-calculator"],
+              ["Pricing", "/pricing-calculator"],
+              ["Cash flow", "/cash-flow-calculator"],
+              ["Startup runway", "/startup-runway-calculator"],
+              ["SaaS metrics", "/saas-calculator"],
+              ["LTV:CAC", "/ltv-cac-calculator"],
+              ["Corporate tax", "/tax-calculator"],
+              ["VAT / GST", "/vat-calculator"],
+              ["Business profitability", "/business-calculator"],
+            ].map(([label, href]) => (
+              <Link
+                key={href}
+                href={href}
+                className="inline-flex h-9 items-center rounded-full border border-border bg-surface px-4 text-xs font-medium transition-colors hover:border-accent hover:text-accent"
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+        </section>
+
         <section className="mx-auto w-full max-w-6xl px-4 py-12 md:px-6">
           <p className="mx-auto max-w-2xl text-center text-xs leading-relaxed text-muted">
             Projections are mathematical consequences of the assumptions you
