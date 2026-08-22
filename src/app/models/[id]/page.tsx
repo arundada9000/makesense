@@ -15,6 +15,7 @@ import { WorkspaceScenariosTab } from "@/components/workspace/scenarios-tab";
 import { WorkspaceFinancingTab } from "@/components/workspace/financing-tab";
 import { WorkspaceTaxTab } from "@/components/workspace/tax-tab";
 import { WorkspaceSensitivityTab } from "@/components/workspace/sensitivity-tab";
+import { WorkspaceCurrencyTab } from "@/components/workspace/currency-tab";
 
 const TABS = [
   { id: "overview", label: "Overview" },
@@ -24,6 +25,7 @@ const TABS = [
   { id: "sensitivity", label: "Sensitivity" },
   { id: "financing", label: "Financing" },
   { id: "tax", label: "Tax" },
+  { id: "currency", label: "Currency" },
 ];
 
 export default function ModelWorkspacePage() {
@@ -117,6 +119,9 @@ export default function ModelWorkspacePage() {
         </Tabs.Content>
         <Tabs.Content value="tax" className="focus:outline-none">
           <WorkspaceTaxTab model={model} />
+        </Tabs.Content>
+        <Tabs.Content value="currency" className="focus:outline-none">
+          <WorkspaceCurrencyTab model={model} />
         </Tabs.Content>
       </Tabs.Root>
     </div>
