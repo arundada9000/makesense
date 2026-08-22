@@ -6,6 +6,46 @@ export interface FaqItem {
   a: string;
 }
 
+/** Schema.org JSON-LD for rich results on calculator pages. */
+function StructuredData({
+  title,
+  intro,
+  faq,
+}: {
+  title: string;
+  intro: string;
+  faq: FaqItem[];
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        name: title,
+        applicationCategory: "FinanceApplication",
+        operatingSystem: "Any",
+        description: intro,
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: faq.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        })),
+      },
+    ],
+  };
+  return (
+    <script
+      type="application/ld+json"
+      // Structured content is fully controlled by us, never user input.
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
 /**
  * Shared layout for standalone calculator landing pages. Each page supplies
  * its own interactive widget plus genuinely useful educational content so no
@@ -32,6 +72,7 @@ export function CalculatorShell({
 }) {
   return (
     <div className="min-h-dvh">
+      <StructuredData title={title} intro={intro} faq={faq} />
       <header className="mx-auto flex h-16 w-full max-w-4xl items-center justify-between px-4 md:px-6">
         <Link href="/" className="text-sm font-semibold tracking-tight">
           MakeSense

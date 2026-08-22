@@ -18,6 +18,10 @@ export const metadata: Metadata = {
   description:
     "Model revenue, costs, cash flow, tax and financing for your business. Runs entirely on your device.",
   applicationName: "MakeSense",
+  openGraph: {
+    siteName: "MakeSense",
+    type: "website",
+  },
 };
 
 export const viewport: Viewport = {
