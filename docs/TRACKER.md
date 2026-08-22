@@ -38,18 +38,23 @@ Last updated: 2026-08-22
 | Tax/VAT calculators | Done | VAT breakdown, position, corporate estimate |
 | Currency/FX | Done | rate table, conversion preserving originals, scenarios |
 | Insights generator | Done | deterministic observations only |
-| Vitest domain test suite | In Progress | primitives/customers/costs/revenue/profit/unit/breakeven/roi/debt written, tax+scenario next, run pending |
+| Vitest domain test suite | Done | 74 tests across 11 files, all passing |
 
 ## Phase 2: Core Application
 
 | Item | Status | Notes |
 |---|---|---|
-| Design tokens and theme system (7 themes) | Pending | |
-| App shell: sidebar, mobile bottom nav | Pending | |
-| Dexie persistence layer | Pending | |
-| Model CRUD with templates and examples | Pending | |
-| Model editor forms | Pending | RHF + Zod |
-| Dashboard metrics and charts | Pending | |
+| Design tokens and theme system (7 themes) | Done | globals.css tokens, ThemeProvider applies data-theme/density/motion |
+| App shell: sidebar, mobile bottom nav | Done | desktop sidebar with model list, 5-slot mobile nav, safe-area padding |
+| Dexie persistence layer | Done | makesense DB v1, models table, import validation |
+| Model CRUD with templates and examples | Done | zustand store, seed on first run, duplicate/archive/delete |
+| Model editor forms | In Progress | assumptions tab complete (basics/customers/streams/costs/investment); RHF+Zod for tax and financing next |
+| Dashboard metrics and charts | Done | metric cards, revenue/cash charts, monthly table, insights |
+| Models gallery | Done | cards with summary metrics, template picker dialog, archive view |
+| Compare page | Done | multi-select table via compareAnalyses |
+| Settings page | Done | themes, density, font scale, number style, export/import/reset |
+| Workspace overview tab | Done | KPIs, charts, break-even stats, month-by-month table |
+| Landing page rewrite | Pending | replace scaffold page.tsx |
 
 ## Phase 3: Advanced Finance
 
