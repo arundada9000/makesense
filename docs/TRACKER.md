@@ -48,13 +48,17 @@ Last updated: 2026-08-22
 | App shell: sidebar, mobile bottom nav | Done | desktop sidebar with model list, 5-slot mobile nav, safe-area padding |
 | Dexie persistence layer | Done | makesense DB v1, models table, import validation |
 | Model CRUD with templates and examples | Done | zustand store, seed on first run, duplicate/archive/delete |
-| Model editor forms | In Progress | assumptions tab complete (basics/customers/streams/costs/investment); RHF+Zod for tax and financing next |
+| Model editor forms | Done | assumptions tab: basics, customers, streams, fixed and variable costs, investment |
 | Dashboard metrics and charts | Done | metric cards, revenue/cash charts, monthly table, insights |
 | Models gallery | Done | cards with summary metrics, template picker dialog, archive view |
 | Compare page | Done | multi-select table via compareAnalyses |
 | Settings page | Done | themes, density, font scale, number style, export/import/reset |
 | Workspace overview tab | Done | KPIs, charts, break-even stats, month-by-month table |
-| Landing page rewrite | Pending | replace scaffold page.tsx |
+| Landing page rewrite | Done | hero, capabilities, how it works, disclaimer |
+| Cash flow workspace tab | Done | flow chart, statement table, loan schedules, runway stats |
+| Scenarios workspace tab | Done | custom scenario CRUD, override editor, comparison table |
+| Financing workspace tab | Done | founder capital, salary, loan CRUD, investor equity, dilution |
+| Tax workspace tab | Done | country presets, VAT split, corporate estimate, effective rates |
 
 ## Phase 3: Advanced Finance
 
