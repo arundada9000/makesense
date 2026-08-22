@@ -35,12 +35,20 @@ export interface SensitivityTable {
   baselineValue: Decimal | null;
 }
 
-type AxisVariable =
+export type AxisVariable =
   | "price"
   | "startingCustomers"
   | "churnPercent"
   | "variableCosts"
   | "monthlyMarketing";
+
+export const AXIS_VARIABLES: ReadonlyArray<{ id: AxisVariable; label: string }> = [
+  { id: "price", label: "Price" },
+  { id: "startingCustomers", label: "Starting customers" },
+  { id: "churnPercent", label: "Monthly churn" },
+  { id: "variableCosts", label: "Variable costs" },
+  { id: "monthlyMarketing", label: "Marketing spend" },
+];
 
 function overrideFor(variable: AxisVariable, step: number) {
   switch (variable) {

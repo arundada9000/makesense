@@ -14,12 +14,14 @@ import { WorkspaceCashFlowTab } from "@/components/workspace/cashflow-tab";
 import { WorkspaceScenariosTab } from "@/components/workspace/scenarios-tab";
 import { WorkspaceFinancingTab } from "@/components/workspace/financing-tab";
 import { WorkspaceTaxTab } from "@/components/workspace/tax-tab";
+import { WorkspaceSensitivityTab } from "@/components/workspace/sensitivity-tab";
 
 const TABS = [
   { id: "overview", label: "Overview" },
   { id: "assumptions", label: "Assumptions" },
   { id: "cashflow", label: "Cash Flow" },
   { id: "scenarios", label: "Scenarios" },
+  { id: "sensitivity", label: "Sensitivity" },
   { id: "financing", label: "Financing" },
   { id: "tax", label: "Tax" },
 ];
@@ -106,6 +108,9 @@ export default function ModelWorkspacePage() {
         </Tabs.Content>
         <Tabs.Content value="scenarios" className="focus:outline-none">
           <WorkspaceScenariosTab model={model} />
+        </Tabs.Content>
+        <Tabs.Content value="sensitivity" className="focus:outline-none">
+          <WorkspaceSensitivityTab model={model} />
         </Tabs.Content>
         <Tabs.Content value="financing" className="focus:outline-none">
           <WorkspaceFinancingTab model={model} />
