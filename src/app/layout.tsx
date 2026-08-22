@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://makesensebusiness.vercel.app"),
   title: {
     default: "MakeSense | Business Model Simulator",
     template: "%s | MakeSense",

@@ -23,9 +23,23 @@ function StructuredData({
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: "/" },
-          { "@type": "ListItem", position: 2, name: "Calculators", item: "/calculators" },
-          { "@type": "ListItem", position: 3, name: title },
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://makesensebusiness.vercel.app/",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Calculators",
+            item: "https://makesensebusiness.vercel.app/calculators",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: title,
+          },
         ],
       },
       {
