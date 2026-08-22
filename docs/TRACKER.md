@@ -123,8 +123,8 @@ Last updated: 2026-08-22
 
 | Item | Status | Notes |
 |---|---|---|
-| Lint clean | Pending | |
-| Typecheck clean | Pending | |
-| All tests passing | Pending | |
-| Production build succeeds | Pending | |
+| Lint clean | Done | zero errors, zero warnings |
+| Typecheck clean | Done | tsc --noEmit passes |
+| All tests passing | Done | 74 domain tests green |
+| Production build succeeds | Done | next build compiles 24 routes, static generation verified |
 | Docs finalized | Pending | |
