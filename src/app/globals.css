@@ -302,6 +302,50 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/*
+  Interactive affordances. Tailwind's preflight resets buttons to the default
+  cursor, which reads as inert; restore pointer semantics for anything
+  clickable and not-disabled.
+*/
+button:not(:disabled),
+[role="button"]:not(:disabled),
+[role="option"],
+[role="tab"],
+summary,
+select:not(:disabled),
+label:has(input:not(:disabled)),
+input[type="range"]:not(:disabled),
+input[type="checkbox"]:not(:disabled),
+input[type="radio"]:not(:disabled) {
+  cursor: pointer;
+}
+button:disabled,
+select:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+a[href] {
+  cursor: pointer;
+}
+
+/* Custom cursor surfaces hide the native pointer except where text carets
+   or precision selection matter. */
+[data-cursor="custom"] body,
+[data-cursor="custom"] a[href],
+[data-cursor="custom"] button:not(:disabled),
+[data-cursor="custom"] [role="button"]:not(:disabled),
+[data-cursor="custom"] summary,
+[data-cursor="custom"] label {
+  cursor: none;
+}
+[data-cursor="custom"] input,
+[data-cursor="custom"] textarea,
+[data-cursor="custom"] select,
+[data-cursor="custom"] [contenteditable],
+[data-cursor="custom"] iframe {
+  cursor: auto !important;
+}
+
 /* Density control tightens vertical rhythm without shrinking type. */
 [data-density="compact"] {
   --section-gap: 1rem;
@@ -328,6 +372,174 @@ body {
 [data-reduced-motion="true"] * {
   transition-duration: 0.01ms !important;
   animation-duration: 0.01ms !important;
+}
+
+/*
+  Marketing animation kit. Entrance animations run once on load; looping
+  ambience (orbs, marquee) is subtle and pauses for reduced-motion users via
+  the global rules above.
+*/
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes rise-sm {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -18px, 0) scale(1.04);
+  }
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes sheen {
+  from {
+    background-position: 200% center;
+  }
+  to {
+    background-position: -200% center;
+  }
+}
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes coin-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.coin-bob {
+  animation: coin-bob 2.2s ease-in-out infinite;
+}
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--surface-secondary) 25%,
+    var(--border) 50%,
+    var(--surface-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+.animate-rise {
+  opacity: 0;
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.animate-rise-sm {
+  opacity: 0;
+  animation: rise-sm 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.animate-pop-in {
+  opacity: 0;
+  animation: pop-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.d-1 { animation-delay: 0.07s; }
+.d-2 { animation-delay: 0.14s; }
+.d-3 { animation-delay: 0.21s; }
+.d-4 { animation-delay: 0.28s; }
+.d-5 { animation-delay: 0.35s; }
+.d-6 { animation-delay: 0.42s; }
+
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  pointer-events: none;
+  will-change: transform;
+}
+.orb-a {
+  animation: float-y 14s ease-in-out infinite;
+}
+.orb-b {
+  animation: float-y 18s ease-in-out infinite reverse;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 36s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.text-sheen {
+  background: linear-gradient(
+    110deg,
+    var(--accent) 20%,
+    color-mix(in srgb, var(--accent) 40%, #ffffff) 40%,
+    var(--accent) 60%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sheen 6s linear infinite;
+}
+
+/* Card hover lift shared by marketing surfaces. */
+.lift {
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease;
+}
+.lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-pop);
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 75%);
 }
 
 ::selection {

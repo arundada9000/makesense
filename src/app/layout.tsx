@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { AppShell, StoreHydration } from "@/components/shell/app-shell";
 import { ServiceWorkerRegistration } from "@/components/service-worker";
 import { FeedbackProvider } from "@/components/feedback";
+import { CustomCursor } from "@/components/custom-cursor";
+import { ContextMenu } from "@/components/context-menu";
 import "./globals.css";
 
 const geistSans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
@@ -55,6 +57,8 @@ export default function RootLayout({
           </FeedbackProvider>
         </ThemeProvider>
         <ServiceWorkerRegistration />
+        <CustomCursor />
+        <ContextMenu />
       </body>
     </html>
   );
