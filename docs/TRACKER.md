@@ -64,60 +64,60 @@ Last updated: 2026-08-22
 
 | Item | Status | Notes |
 |---|---|---|
-| Cash flow page | Pending | |
-| Pricing simulator | Pending | |
-| SaaS metrics page | Pending | |
-| Scenario engine UI | Pending | |
-| What-if simulator | Pending | |
-| Sensitivity tables | Pending | |
+| Cash flow page | Done | workspace cash flow tab with chart, statement, loan schedules |
+| Pricing simulator | Done | pricing calculator landing page |
+| SaaS metrics page | Done | SaaS calculator landing page |
+| Scenario engine UI | Done | scenarios tab with override editor and comparison table |
+| What-if simulator | Done | sensitivity tab re-runs full engine per cell |
+| Sensitivity tables | Done | two-variable grid, color coded, metric selector |
 
 ## Phase 4: Tax and Currency
 
 | Item | Status | Notes |
 |---|---|---|
-| Tax profiles and Nepal preset | Pending | |
-| VAT/GST calculator | Pending | |
-| Currency conversion with provenance | Pending | |
-| FX scenarios | Pending | |
+| Tax profiles and Nepal preset | Done | tax tab presets: NP, IN, US, GB, AU, CA, DE |
+| VAT/GST calculator | Done | tax tab split plus dedicated /vat-calculator page |
+| Currency conversion with provenance | Done | currency tab shows rate, date, source; originals preserved |
+| FX scenarios | Done | shift table for foreign revenue/costs |
 
 ## Phase 5: Financing
 
 | Item | Status | Notes |
 |---|---|---|
-| Founder capital | Pending | |
-| Debt amortization | Pending | |
-| Investor capital and dilution | Pending | |
-| Financing comparison | Pending | |
-| Founder economics | Pending | |
-| Capital allocation | Pending | |
+| Founder capital | Done | financing tab, enters cash at month 0 |
+| Debt amortization | Done | loan CRUD with level payment schedules in cash flow and financing tabs |
+| Investor capital and dilution | Done | investment amount, ownership percent, implied valuation, profit share |
+| Financing comparison | Deferred | compare funding paths via scenarios; core pieces shipped |
+| Founder economics | Done | founder salary as drawings, capital summary rows |
+| Capital allocation | Deferred | covered indirectly by investment and cost items |
 
 ## Phase 6: Product Quality
 
 | Item | Status | Notes |
 |---|---|---|
-| Command palette | Pending | Ctrl/Cmd K |
-| Settings pages | Pending | |
-| Haptics/sound feedback managers | Pending | optional, disableable |
-| PWA manifest and offline shell | Pending | |
-| Accessibility audit pass | Pending | |
-| Keyboard shortcuts | Pending | |
+| Command palette | Done | Ctrl/Cmd K, pages and model search |
+| Settings pages | Done | themes, density, font scale, number style, data management |
+| Haptics/sound feedback managers | Deferred | optional per spec; not started |
+| PWA manifest and offline shell | In Progress | manifest and icon done; service worker offline shell pending |
+| Accessibility audit pass | In Progress | semantic landmarks, focus rings, labels throughout; full audit pending |
+| Keyboard shortcuts | In Progress | Ctrl/Cmd K done; more shortcuts pending |
 
 ## Phase 7: Public Site and SEO
 
 | Item | Status | Notes |
 |---|---|---|
-| Marketing landing page | Pending | |
-| Calculator landing pages | Pending | 9 planned |
-| Metadata, JSON-LD, OG images | Pending | |
-| Sitemap and robots | Pending | |
+| Marketing landing page | Done | hero, capabilities, how it works, calculator links, disclaimer |
+| Calculator landing pages | Done | all 12 routes with unique metadata, formula, example, mistakes, FAQ, related links |
+| Metadata, JSON-LD, OG images | In Progress | per-page titles/descriptions/canonicals done; JSON-LD and OG images pending |
+| Sitemap and robots | Done | app routes excluded from crawling |
 
 ## Phase 8: Reports
 
 | Item | Status | Notes |
 |---|---|---|
-| Printable report | Pending | |
-| JSON export/import | Pending | versioned schema |
-| Two-model comparison page | Pending | |
+| Printable report | Done | /models/[id]/report with print styles and save-as-PDF |
+| JSON export/import | Done | per-model export on report page; full backup export/import in settings |
+| Two-model comparison page | Done | /compare supports any number of models |
 
 ## Final QA
 
