@@ -138,8 +138,8 @@ Last updated: 2026-08-22
 | Footer socials and author links | Done | Added GitHub, Twitter/X, LinkedIn, Portfolio SVG links |
 | Text scroll reveal animations | Done | Lightweight intersection-observer ScrollReveal on doc pages |
 | Em-dash (—) cleanup | Done | Replaced all em dashes across documentation, meta, and UI copy |
-| Landing page hero and badge redesign | In Progress | Redesigning hero, craft badge, typography, and CTA |
-| Interactive product showcase | Not Started | Multi-tab interactive preview replacing static dashboard block |
-| Landing page motion and micro-interactions | Not Started | Subtle, performant Apple-grade animations and tickers |
-| Final verification and build test | Not Started | Ensure typecheck, tests, and build all green |
+| Landing page hero and badge redesign | Done | Replaced AI badge with bespoke craft pill, improved typography |
+| Interactive product showcase | Done | ShowcasePreview multi-tab interactive workspace preview |
+| Landing page motion and micro-interactions | Done | LiveSimulator sandbox, ScrollReveal stagger, zero lag |
+| Final verification and build test | Done | Typecheck, 74 domain tests, and next build verified green |
 
