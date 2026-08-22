@@ -10,10 +10,18 @@ import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { WorkspaceOverviewTab } from "@/components/workspace/overview-tab";
 import { WorkspaceAssumptionsTab } from "@/components/workspace/assumptions-tab";
+import { WorkspaceCashFlowTab } from "@/components/workspace/cashflow-tab";
+import { WorkspaceScenariosTab } from "@/components/workspace/scenarios-tab";
+import { WorkspaceFinancingTab } from "@/components/workspace/financing-tab";
+import { WorkspaceTaxTab } from "@/components/workspace/tax-tab";
 
 const TABS = [
   { id: "overview", label: "Overview" },
   { id: "assumptions", label: "Assumptions" },
+  { id: "cashflow", label: "Cash Flow" },
+  { id: "scenarios", label: "Scenarios" },
+  { id: "financing", label: "Financing" },
+  { id: "tax", label: "Tax" },
 ];
 
 export default function ModelWorkspacePage() {
@@ -92,6 +100,18 @@ export default function ModelWorkspacePage() {
         </Tabs.Content>
         <Tabs.Content value="assumptions" className="focus:outline-none">
           <WorkspaceAssumptionsTab model={model} />
+        </Tabs.Content>
+        <Tabs.Content value="cashflow" className="focus:outline-none">
+          <WorkspaceCashFlowTab model={model} />
+        </Tabs.Content>
+        <Tabs.Content value="scenarios" className="focus:outline-none">
+          <WorkspaceScenariosTab model={model} />
+        </Tabs.Content>
+        <Tabs.Content value="financing" className="focus:outline-none">
+          <WorkspaceFinancingTab model={model} />
+        </Tabs.Content>
+        <Tabs.Content value="tax" className="focus:outline-none">
+          <WorkspaceTaxTab model={model} />
         </Tabs.Content>
       </Tabs.Root>
     </div>
