@@ -13,6 +13,7 @@ import {
   CornerDownLeft,
 } from "lucide-react";
 import { useModelStore } from "@/stores/model-store";
+import { useFeedback } from "@/components/feedback";
 
 interface CommandItem {
   id: string;
@@ -26,6 +27,7 @@ interface CommandItem {
 export function CommandPalette() {
   const router = useRouter();
   const models = useModelStore((s) => s.models);
+  const feedback = useFeedback();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
 
@@ -34,11 +36,12 @@ export function CommandPalette() {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         setOpen((v) => !v);
+        feedback.tap("light");
       }
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [feedback]);
 
   const items = useMemo<CommandItem[]>(() => {
     const nav: CommandItem[] = [
@@ -139,6 +142,7 @@ export function CommandPalette() {
                         <button
                           type="button"
                           onClick={() => {
+                            feedback.tap("success");
                             setOpen(false);
                             setQuery("");
                             item.run();

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AppShell, StoreHydration } from "@/components/shell/app-shell";
 import { ServiceWorkerRegistration } from "@/components/service-worker";
+import { FeedbackProvider } from "@/components/feedback";
 import "./globals.css";
 
 const geistSans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
@@ -47,9 +48,11 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>
-          <StoreHydration>
-            <AppShell>{children}</AppShell>
-          </StoreHydration>
+          <FeedbackProvider>
+            <StoreHydration>
+              <AppShell>{children}</AppShell>
+            </StoreHydration>
+          </FeedbackProvider>
         </ThemeProvider>
         <ServiceWorkerRegistration />
       </body>
