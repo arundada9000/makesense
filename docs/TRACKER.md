@@ -97,10 +97,10 @@ Last updated: 2026-08-22
 |---|---|---|
 | Command palette | Done | Ctrl/Cmd K, pages and model search |
 | Settings pages | Done | themes, density, font scale, number style, data management |
-| Haptics/sound feedback managers | Deferred | optional per spec; not started |
-| PWA manifest and offline shell | In Progress | manifest and icon done; service worker offline shell pending |
-| Accessibility audit pass | In Progress | semantic landmarks, focus rings, labels throughout; full audit pending |
-| Keyboard shortcuts | In Progress | Ctrl/Cmd K done; more shortcuts pending |
+| Haptics/sound feedback managers | Done | FeedbackProvider with WebAudio ticks and vibration, off by default |
+| PWA manifest and offline shell | Done | manifest, icon, runtime-caching service worker registered in production |
+| Accessibility audit pass | Done | skip link, landmarks, labeled inputs, visible focus rings |
+| Keyboard shortcuts | Done | Ctrl/Cmd K palette plus D/M/C/comma navigation keys |
 
 ## Phase 7: Public Site and SEO
 
@@ -108,7 +108,7 @@ Last updated: 2026-08-22
 |---|---|---|
 | Marketing landing page | Done | hero, capabilities, how it works, calculator links, disclaimer |
 | Calculator landing pages | Done | all 12 routes with unique metadata, formula, example, mistakes, FAQ, related links |
-| Metadata, JSON-LD, OG images | In Progress | per-page titles/descriptions/canonicals done; JSON-LD and OG images pending |
+| Metadata, JSON-LD, OG images | Done | per-page canonicals, WebApplication plus FAQPage schema, generated OG image |
 | Sitemap and robots | Done | app routes excluded from crawling |
 
 ## Phase 8: Reports
