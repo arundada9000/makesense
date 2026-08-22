@@ -357,3 +357,20 @@ body {
 *::-webkit-scrollbar-track {
   background: transparent;
 }
+
+/* Print: strip chrome, keep the report. */
+@media print {
+  aside,
+  nav[aria-label="Primary mobile"],
+  .print\:hidden {
+    display: none !important;
+  }
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}

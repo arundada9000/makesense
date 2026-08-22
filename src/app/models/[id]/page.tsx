@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import * as Tabs from "@radix-ui/react-tabs";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, FileText } from "lucide-react";
 import { useModelStore } from "@/stores/model-store";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -82,6 +82,12 @@ export default function ModelWorkspacePage() {
             {model.projectionSettings.horizonMonths} month horizon
           </p>
         </div>
+        <Link
+          href={`/models/${model.id}/report`}
+          className="ml-auto inline-flex h-9 items-center gap-1.5 rounded-[var(--radius-base)] border border-border-strong bg-surface px-3 text-xs font-medium transition-colors hover:bg-surface-secondary"
+        >
+          <FileText className="h-3.5 w-3.5" /> Report
+        </Link>
       </header>
 
       <Tabs.Root defaultValue="overview" className="mt-4">
