@@ -12,6 +12,7 @@ import {
   Trash2,
   Plus,
   ArchiveRestore,
+  SlidersHorizontal,
 } from "lucide-react";
 import { MODEL_TEMPLATES } from "@/domain/model/templates";
 import type { BusinessModel } from "@/domain/model/types";
@@ -241,6 +242,15 @@ function ModelCard({
                 </MenuAction>
               ) : (
                 <>
+                  <DropdownMenu.Item asChild>
+                    <Link
+                      href={`/models/${model.id}`}
+                      className="flex cursor-pointer items-center gap-2 rounded-md px-2.5 py-2 text-xs outline-none transition-colors data-highlighted:bg-surface-secondary"
+                    >
+                      <SlidersHorizontal className="h-3.5 w-3.5 text-muted" />
+                      <span>Edit assumptions</span>
+                    </Link>
+                  </DropdownMenu.Item>
                   <MenuAction onSelect={onDuplicate} icon={<Copy className="h-3.5 w-3.5" />}>
                     Duplicate
                   </MenuAction>

@@ -11,6 +11,10 @@ import {
   Plus,
   LineChart,
   Search,
+  Calculator,
+  BookOpen,
+  ArrowLeft,
+  Home,
 } from "lucide-react";
 import { useModelStore } from "@/stores/model-store";
 import { CommandPalette } from "@/components/command-palette";
@@ -20,19 +24,24 @@ const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/models", label: "Models", icon: Boxes },
   { href: "/compare", label: "Compare", icon: GitCompareArrows },
+  { href: "/calculators", label: "Calculators", icon: Calculator },
+  { href: "/manual", label: "Manual", icon: BookOpen },
   { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 const MOBILE_ITEMS = [
   { href: "/dashboard", label: "Home", icon: LayoutDashboard },
   { href: "/models", label: "Models", icon: Boxes },
-  { href: "/compare", label: "Compare", icon: GitCompareArrows },
+  { href: "/calculators", label: "Calculators", icon: Calculator },
   { href: "/settings", label: "More", icon: Settings },
 ];
 
 function isActive(pathname: string, href: string): boolean {
   if (href === "/models") {
-    return pathname.startsWith("/models");
+    return pathname === "/models" || pathname.startsWith("/models/");
+  }
+  if (href === "/calculators") {
+    return pathname.startsWith("/calculators") || pathname.includes("-calculator");
   }
   return pathname === href || pathname.startsWith(`${href}/`);
 }
@@ -173,9 +182,18 @@ function Sidebar({ pathname }: { pathname: string }) {
         </ul>
       </div>
 
-      <p className="border-t border-border px-5 py-3 text-[11px] leading-relaxed text-muted">
-        Models are stored locally on this device.
-      </p>
+      <div className="border-t border-border px-3 py-2.5">
+        <Link
+          href="/"
+          className="flex h-8 w-full items-center gap-2 rounded-[var(--radius-base)] px-2 text-xs text-muted-foreground transition-colors hover:bg-surface-secondary hover:text-foreground"
+        >
+          <Home className="h-3.5 w-3.5" />
+          <span>Exit to Website</span>
+        </Link>
+        <p className="mt-1 px-2 text-[10px] leading-relaxed text-muted">
+          Models stored locally on this device.
+        </p>
+      </div>
     </aside>
   );
 }

@@ -21,7 +21,16 @@ import { MetricCard, MaybeValue } from "@/components/ui/metric";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { PageSection } from "@/components/ui/empty-state";
 
-export function WorkspaceOverviewTab({ model }: { model: BusinessModel }) {
+import { SlidersHorizontal, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+export function WorkspaceOverviewTab({
+  model,
+  onNavigateTab,
+}: {
+  model: BusinessModel;
+  onNavigateTab?: (tab: string) => void;
+}) {
   const analysis = useMemo(() => analyzeModel(model), [model]);
   const numberStyle = usePreferences((s) => s.numberStyle);
   const currency = model.baseCurrency;
@@ -44,8 +53,49 @@ export function WorkspaceOverviewTab({ model }: { model: BusinessModel }) {
     .slice(0, 12)
     .reduce((a, p) => a.plus(p.revenue), new Decimal(0));
 
+  const totalFixedCosts = model.fixedCosts.reduce((acc, c) => acc + c.amount, 0);
+
   return (
     <div className="space-y-4">
+      {/* Quick Assumptions Summary & Direct Edit Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-base)] border border-border bg-surface px-4 py-3 shadow-xs">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-1.5 text-xs">
+          <div>
+            <span className="text-muted">Primary Pricing: </span>
+            <span className="font-semibold text-foreground">
+              {model.revenueStreams[0]
+                ? `${formatMoney(model.revenueStreams[0].price, currency, { style: "compact" })}${
+                    model.revenueStreams[0].type === "monthly" ? "/mo" : ""
+                  }`
+                : "None"}
+            </span>
+          </div>
+          <div>
+            <span className="text-muted">Customers: </span>
+            <span className="font-semibold text-foreground">
+              {model.customers.startingCustomers} start
+              {model.customers.growthMode === "fixed" ? ` (+${model.customers.fixedGrowthPerMonth}/mo)` : ""}
+              {model.customers.growthMode === "percentage" ? ` (+${model.customers.percentageGrowthPerMonth}%/mo)` : ""}
+            </span>
+          </div>
+          <div>
+            <span className="text-muted">Monthly Overhead: </span>
+            <span className="font-semibold text-foreground">
+              {formatMoney(totalFixedCosts, currency, { style: "compact" })}/mo
+            </span>
+          </div>
+        </div>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => onNavigateTab?.("assumptions")}
+          className="inline-flex items-center gap-1.5 font-medium"
+        >
+          <SlidersHorizontal className="h-3.5 w-3.5" />
+          <span>Edit Model Inputs</span>
+        </Button>
+      </div>
+
       <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
         <MetricCard
           label="Year 1 revenue"

@@ -11,15 +11,20 @@ import {
   Plus,
   Search,
   CornerDownLeft,
+  Calculator,
+  BookOpen,
+  Home,
+  Shield,
 } from "lucide-react";
 import { useModelStore } from "@/stores/model-store";
 import { useFeedback } from "@/components/feedback";
+import { CALCULATOR_DIRECTORY } from "@/lib/calculator-directory";
 
 interface CommandItem {
   id: string;
   label: string;
   hint?: string;
-  group: "Navigate" | "Models";
+  group: "Navigate" | "Calculators" | "Models";
   icon: React.ReactNode;
   run: () => void;
 }
@@ -75,13 +80,47 @@ export function CommandPalette() {
         run: () => router.push("/compare"),
       },
       {
+        id: "nav-calculators",
+        label: "All Calculators",
+        hint: "12 free standalone tools",
+        group: "Navigate",
+        icon: <Calculator className="h-4 w-4" />,
+        run: () => router.push("/calculators"),
+      },
+      {
+        id: "nav-manual",
+        label: "User Manual",
+        hint: "Documentation & formulas",
+        group: "Navigate",
+        icon: <BookOpen className="h-4 w-4" />,
+        run: () => router.push("/manual"),
+      },
+      {
         id: "nav-settings",
         label: "Settings",
         group: "Navigate",
         icon: <Settings className="h-4 w-4" />,
         run: () => router.push("/settings"),
       },
+      {
+        id: "nav-home",
+        label: "Website Home",
+        hint: "Landing page",
+        group: "Navigate",
+        icon: <Home className="h-4 w-4" />,
+        run: () => router.push("/"),
+      },
     ];
+
+    const calcItems: CommandItem[] = CALCULATOR_DIRECTORY.map((c) => ({
+      id: `calc-${c.slug}`,
+      label: c.name,
+      hint: c.tagline,
+      group: "Calculators" as const,
+      icon: <Calculator className="h-4 w-4" />,
+      run: () => router.push(c.slug),
+    }));
+
     const modelItems: CommandItem[] = models
       .filter((m) => !m.metadata.archived)
       .map((m) => ({
@@ -92,7 +131,8 @@ export function CommandPalette() {
         icon: <Boxes className="h-4 w-4" />,
         run: () => router.push(`/models/${m.id}`),
       }));
-    return [...nav, ...modelItems];
+
+    return [...nav, ...calcItems, ...modelItems];
   }, [models, router]);
 
   const filtered = useMemo(() => {
@@ -128,7 +168,7 @@ export function CommandPalette() {
                 No matches.
               </li>
             ) : null}
-            {(["Navigate", "Models"] as const).map((group) => {
+            {(["Navigate", "Calculators", "Models"] as const).map((group) => {
               const groupItems = filtered.filter((i) => i.group === group);
               if (groupItems.length === 0) return null;
               return (
