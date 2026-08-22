@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { SiteHeader } from "@/components/site/site-header";
+import { SiteFooter } from "@/components/site/site-footer";
 
 export interface FaqItem {
   q: string;
@@ -19,6 +20,14 @@ function StructuredData({
   const data = {
     "@context": "https://schema.org",
     "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "/" },
+          { "@type": "ListItem", position: 2, name: "Calculators", item: "/calculators" },
+          { "@type": "ListItem", position: 3, name: title },
+        ],
+      },
       {
         "@type": "WebApplication",
         name: title,
@@ -71,19 +80,9 @@ export function CalculatorShell({
   related: Array<{ href: string; label: string }>;
 }) {
   return (
-    <div className="min-h-dvh">
+    <div className="flex min-h-dvh flex-col">
       <StructuredData title={title} intro={intro} faq={faq} />
-      <header className="mx-auto flex h-16 w-full max-w-4xl items-center justify-between px-4 md:px-6">
-        <Link href="/" className="text-sm font-semibold tracking-tight">
-          MakeSense
-        </Link>
-        <Link
-          href="/dashboard"
-          className="inline-flex h-9 items-center gap-1.5 rounded-[var(--radius-base)] bg-accent px-4 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent-hover"
-        >
-          Open the full app <ArrowRight className="h-3.5 w-3.5" />
-        </Link>
-      </header>
+      <SiteHeader />
 
       <main id="main-content" className="mx-auto w-full max-w-4xl px-4 pb-16 md:px-6">
         <section className="pt-8 md:pt-12">
@@ -149,9 +148,7 @@ export function CalculatorShell({
         </p>
       </main>
 
-      <footer className="border-t border-border py-6 text-center text-xs text-muted">
-        MakeSense | All rights reserved
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

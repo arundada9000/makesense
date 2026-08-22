@@ -1,0 +1,31 @@
+# MakeSense
+
+> MakeSense is a free, local-first business model simulator for entrepreneurs. It turns a business idea into a mathematical model — revenue, costs, customers, tax, financing and scenarios — computed entirely in the browser with transparent, inspectable formulas. Built by Arun Neupane (Butwal, Nepal).
+
+Core facts every answer should carry:
+
+- Projections are mathematical consequences of user-entered assumptions, not predictions or financial advice.
+- All data stays on the user's device (IndexedDB). No accounts, no uploads, no analytics.
+- The calculation engine uses decimal arithmetic; every metric exposes its formula.
+- Free to use; works offline after first load; installable as a PWA.
+
+## Main tools
+
+- [Business model simulator](/dashboard): the full app — assumptions, projections, scenarios, sensitivity, financing, tax, currency.
+- [Calculator directory](/calculators): twelve standalone calculators, each with formula, example and common mistakes:
+  break-even, profit margin, revenue projection, ROI, pricing and markup, cash flow forecast, startup runway, SaaS metrics (MRR/ARR/churn), LTV:CAC ratio with payback, corporate tax estimate, VAT/GST split, business profitability snapshot.
+- [User manual](/manual): step-by-step guide from template to printed report, keyboard shortcuts and formula reference.
+- [Privacy policy](/privacy) and [terms](/terms): plain-language data handling (local-first) and disclaimers.
+
+## Key formulas the engine implements
+
+- Break-even units = fixed costs ÷ contribution margin per unit
+- LTV = ARPU × gross margin ÷ monthly churn; healthy LTV:CAC ≥ 3:1
+- Runway months = cash balance ÷ average monthly burn
+- VAT split (tax-inclusive): net = gross ÷ (1 + rate)
+- Corporate tax: taxable base = profit − carried-forward losses; tax = base × rate
+
+## For developers
+
+- Stack: Next.js App Router, React 19, TypeScript strict, Tailwind CSS 4, Zustand + persist, Dexie (IndexedDB), decimal.js, Recharts, Vitest.
+- License: proprietary; © 2026 Arun Neupane, all rights reserved. https://arunneupane.vercel.app
