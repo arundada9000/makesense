@@ -14,24 +14,31 @@ Last updated: 2026-08-22
 | Implementation plan | Done | docs/IMPLEMENTATION_PLAN.md |
 | Tracker | Done | this file |
 | Feature list | Done | FEATURES.md |
-| LICENSE (all rights reserved) | Done | LICENSE |
-| .gitignore + git init + first commit | In Progress | |
-| README | Pending | |
+| LICENSE (all rights reserved) | Done | LICENSE rewritten as all rights reserved |
+| .gitignore + git init + first commit | Done | commit e5a8b9f then scaffold commit |
+| README | Done | setup, stack, privacy, disclaimer |
 
 ## Phase 1: Domain Engine
 
 | Item | Status | Notes |
 |---|---|---|
-| Money, currency registry, percentage primitives | Pending | decimal.js based |
-| Revenue engine | Pending | streams, MRR/ARR/ARPU |
-| Cost engine | Pending | frequency normalization |
-| Customer growth projections | Pending | fixed, percent, custom, churn |
-| Profit waterfall and margins | Pending | |
-| Unit economics | Pending | contribution, CAC, LTV, payback |
-| Break-even suite | Pending | customers, revenue, investment recovery |
-| ROI and payback | Pending | |
-| Canonical model types and defaults | Pending | Zod schemas |
-| Vitest domain test suite | Pending | edge case matrix from spec |
+| Money, currency registry, percentage primitives | Done | decimal.js based, largest-remainder allocate |
+| Revenue engine | Done | streams, MRR/ARR/ARPU, usage and commission types |
+| Cost engine | Done | frequency normalization, per-order conversion |
+| Customer growth projections | Done | fixed, percent, custom, churn first, market cap |
+| Profit waterfall and margins | Done | tax with loss carryforward |
+| Unit economics | Done | contribution, CAC, LTV with manual override, payback |
+| Break-even suite | Done | customers, revenue, investment recovery, progress |
+| ROI and payback | Done | cumulative series |
+| Cash flow | Done | debt service, founder drawings, runway guards |
+| Debt amortization | Done | level payment schedule, zero interest split |
+| Canonical model types and defaults | Done | templates for SaaS, micro-payment, enterprise |
+| Scenario engine | Done | override application, comparison rows |
+| Sensitivity tables | Done | two-variable grid re-running full engine |
+| Tax/VAT calculators | Done | VAT breakdown, position, corporate estimate |
+| Currency/FX | Done | rate table, conversion preserving originals, scenarios |
+| Insights generator | Done | deterministic observations only |
+| Vitest domain test suite | In Progress | primitives/customers/costs/revenue/profit/unit/breakeven/roi/debt written, tax+scenario next, run pending |
 
 ## Phase 2: Core Application
 
