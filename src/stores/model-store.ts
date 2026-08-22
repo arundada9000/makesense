@@ -9,6 +9,7 @@ import {
   putModel,
   deleteModel as dbDelete,
   clearModels,
+  type StoredModel,
 } from "@/infrastructure/persistence/db";
 
 interface ModelStoreState {
@@ -42,6 +43,50 @@ function touch(model: BusinessModel): BusinessModel {
   };
 }
 
+/** Automatically detects and removes race-condition duplicate seed models from IndexedDB. */
+function deduplicateStoredModels(stored: StoredModel[]): StoredModel[] {
+  const seenIds = new Set<string>();
+  const seenSeedTypes = new Set<string>();
+  const unique: StoredModel[] = [];
+  const duplicateIdsToRemove: string[] = [];
+
+  for (const s of stored) {
+    // Exact ID collision
+    if (seenIds.has(s.id)) {
+      duplicateIdsToRemove.push(s.id);
+      continue;
+    }
+    seenIds.add(s.id);
+
+    // Duplicate starter seed template check
+    const isSeed =
+      (s.name === "SaaS Product" && s.model.businessType === "subscription-saas") ||
+      (s.name === "Digital Product" && s.model.businessType === "one-time-product") ||
+      (s.name === "Enterprise Product" && s.model.businessType === "b2b-enterprise");
+
+    if (isSeed) {
+      if (seenSeedTypes.has(s.model.businessType)) {
+        duplicateIdsToRemove.push(s.id);
+        continue;
+      }
+      seenSeedTypes.add(s.model.businessType);
+    }
+
+    unique.push(s);
+  }
+
+  // Cleanup removed duplicate records from local IndexedDB
+  if (duplicateIdsToRemove.length > 0) {
+    for (const dupId of duplicateIdsToRemove) {
+      void dbDelete(dupId);
+    }
+  }
+
+  return unique;
+}
+
+let hydratingPromise: Promise<void> | null = null;
+
 export const useModelStore = create<ModelStoreState & ModelStoreActions>()(
   (set, get) => ({
     models: [],
@@ -50,20 +95,36 @@ export const useModelStore = create<ModelStoreState & ModelStoreActions>()(
 
     hydrate: async () => {
       if (get().hydrated) return;
-      const stored = await allModels();
-      if (stored.length === 0) {
-        await get().ensureSeeded();
-        return;
-      }
-      set({
-        models: stored.map((s) => s.model),
-        hydrated: true,
-        activeModelId: stored[0]?.model.id ?? null,
+      if (hydratingPromise) return hydratingPromise;
+
+      hydratingPromise = (async () => {
+        const stored = await allModels();
+        if (stored.length === 0) {
+          await get().ensureSeeded();
+          return;
+        }
+
+        const uniqueStored = deduplicateStoredModels(stored);
+        const models = uniqueStored.map((s) => s.model);
+
+        set({
+          models,
+          hydrated: true,
+          activeModelId: models[0]?.id ?? null,
+        });
+      })().finally(() => {
+        hydratingPromise = null;
       });
+
+      return hydratingPromise;
     },
 
     ensureSeeded: async () => {
-      const seeded = MODEL_TEMPLATES.map((t) => t.build());
+      const seeded = MODEL_TEMPLATES.map((t) => {
+        const m = t.build();
+        m.id = `seed_${t.id.replace(/-/g, "_")}`;
+        return m;
+      });
       for (const model of seeded) {
         await putModel(model);
       }
@@ -86,6 +147,7 @@ export const useModelStore = create<ModelStoreState & ModelStoreActions>()(
             name: name ?? "Untitled model",
             businessType: "custom",
           });
+      model.id = createId("model");
       if (name) model.name = name;
       await putModel(model);
       set((state) => ({
