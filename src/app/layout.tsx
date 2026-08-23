@@ -27,6 +27,12 @@ export const metadata: Metadata = {
     siteName: "MakeSense",
     type: "website",
   },
+  verification: {
+    google: "y_iQncnrIS7Nycs-SFAgvF9aPPyozMkTeJhrDnmS2R0",
+  },
+  other: {
+    "google-adsense-account": "ca-pub-1708134460872611",
+  },
 };
 
 export const viewport: Viewport = {
