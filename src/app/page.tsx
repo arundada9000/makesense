@@ -20,11 +20,12 @@ import { ShowcasePreview } from "@/components/site/showcase-preview";
 import { LiveSimulator } from "@/components/site/live-simulator";
 import { ScrollReveal } from "@/components/site/scroll-reveal";
 import { CALCULATOR_DIRECTORY } from "@/lib/calculator-directory";
+import { PERSONAL_FINANCE_DIRECTORY } from "@/lib/personal-finance-directory";
 
 export const metadata: Metadata = {
-  title: "MakeSense | Business Model Simulator",
+  title: "Free Calculators for Business & Personal Finance - MakeSense",
   description:
-    "Turn a business idea into a mathematical model. Revenue, costs, cash flow, tax, financing and scenarios, computed on your device with transparent formulas.",
+    "Free startup runway, revenue projection, profitability, LTV:CAC and break-even calculators plus salary, savings and budget tools. Every formula explained, runs on your device.",
   alternates: { canonical: "/" },
 };
 
@@ -336,54 +337,123 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Calculators Preview */}
+        {/* Calculator Directory Hub */}
         <section className="mx-auto w-full max-w-6xl px-4 py-16 md:px-6 md:py-24">
           <ScrollReveal>
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-widest text-accent">
-                  Standalone Tools
+                  Calculator hub
                 </p>
                 <h2 className="mt-1.5 text-2xl font-semibold tracking-tight">
-                  Twelve free business calculators
+                  Money and business, answered in plain math
                 </h2>
                 <p className="mt-1 max-w-xl text-xs leading-relaxed text-muted-foreground">
-                  Quick answers with formulas and worked examples. The full app connects
-                  them into one coherent financial model.
+                  Fast calculators with the formula shown and a worked example.
+                  Pick the side of your life that needs a number today.
                 </p>
               </div>
-              <Link
-                href="/calculators"
-                className="group inline-flex items-center gap-1 text-xs font-semibold text-accent transition-colors hover:underline"
-              >
-                <span>View all twelve calculators</span>
-                <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </Link>
             </div>
           </ScrollReveal>
 
-          <ul className="mt-8 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-            {CALCULATOR_DIRECTORY.slice(0, 6).map((calc, i) => (
-              <ScrollReveal key={calc.slug} delay={i * 50}>
-                <li>
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            <ScrollReveal>
+              <section
+                aria-label="Personal finance calculators"
+                className="flex h-full flex-col rounded-[var(--radius-lg)] border border-border bg-surface p-5 shadow-card"
+              >
+                <div className="flex items-end justify-between gap-3">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-accent">
+                      For your money
+                    </p>
+                    <h3 className="mt-1 text-base font-semibold tracking-tight">
+                      Personal finance tools
+                    </h3>
+                  </div>
                   <Link
-                    href={calc.slug}
-                    className="lift group flex items-center justify-between gap-3 rounded-[var(--radius-base)] border border-border bg-surface px-4 py-3.5 shadow-card"
+                    href="/personal-finance"
+                    className="group inline-flex items-center gap-1 text-xs font-semibold text-accent transition-colors hover:underline"
                   >
-                    <span>
-                      <span className="block text-sm font-medium transition-colors group-hover:text-accent">
-                        {calc.name}
-                      </span>
-                      <span className="mt-0.5 block text-[11px] text-muted">
-                        {calc.tagline}
-                      </span>
-                    </span>
-                    <ArrowUpRight className="h-4 w-4 shrink-0 text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+                    <span>View all</span>
+                    <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </Link>
-                </li>
-              </ScrollReveal>
-            ))}
-          </ul>
+                </div>
+                <ul className="mt-4 flex-1 space-y-2">
+                  {PERSONAL_FINANCE_DIRECTORY.map((entry) => (
+                    <li key={entry.slug}>
+                      <Link
+                        href={entry.slug}
+                        className="lift group flex items-center justify-between gap-3 rounded-[var(--radius-base)] border border-border bg-surface-secondary/60 px-4 py-3"
+                      >
+                        <span>
+                          <span className="block text-sm font-medium transition-colors group-hover:text-accent">
+                            {entry.name}
+                          </span>
+                          <span className="mt-0.5 block text-[11px] text-muted">
+                            {entry.tagline}
+                          </span>
+                        </span>
+                        <ArrowUpRight className="h-4 w-4 shrink-0 text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </ScrollReveal>
+
+            <ScrollReveal delay={100}>
+              <section
+                aria-label="Business calculators"
+                className="flex h-full flex-col rounded-[var(--radius-lg)] border border-border bg-surface p-5 shadow-card"
+              >
+                <div className="flex items-end justify-between gap-3">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-accent">
+                      For your business
+                    </p>
+                    <h3 className="mt-1 text-base font-semibold tracking-tight">
+                      Business calculators
+                    </h3>
+                  </div>
+                  <Link
+                    href="/calculators"
+                    className="group inline-flex items-center gap-1 text-xs font-semibold text-accent transition-colors hover:underline"
+                  >
+                    <span>View all twelve</span>
+                    <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  </Link>
+                </div>
+                <ul className="mt-4 flex-1 space-y-2">
+                  {CALCULATOR_DIRECTORY.slice(0, 4).map((calc) => (
+                    <li key={calc.slug}>
+                      <Link
+                        href={calc.slug}
+                        className="lift group flex items-center justify-between gap-3 rounded-[var(--radius-base)] border border-border bg-surface-secondary/60 px-4 py-3"
+                      >
+                        <span>
+                          <span className="block text-sm font-medium transition-colors group-hover:text-accent">
+                            {calc.name}
+                          </span>
+                          <span className="mt-0.5 block text-[11px] text-muted">
+                            {calc.tagline}
+                          </span>
+                        </span>
+                        <ArrowUpRight className="h-4 w-4 shrink-0 text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-4 border-t border-border pt-4 text-xs text-muted-foreground">
+                  Prefer reading first?{" "}
+                  <Link href="/guides" className="font-medium text-accent hover:underline">
+                    Explore the financial guides
+                  </Link>{" "}
+                  - runway, revenue estimation and LTV:CAC explained with worked examples.
+                </p>
+              </section>
+            </ScrollReveal>
+          </div>
         </section>
 
         {/* Privacy Section */}
