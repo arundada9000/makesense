@@ -20,6 +20,7 @@ interface SubMenuState {
   group: ContextMenuGroupDef;
   x: number;
   y: number;
+  openLeft: boolean;
 }
 
 function isTextTarget(t: EventTarget | null): boolean {
@@ -48,6 +49,8 @@ export function ContextMenu() {
   const closeTimer = useRef<number | undefined>(undefined);
   const touchTimer = useRef<number | undefined>(undefined);
   const firstTouchItem = useRef<HTMLButtonElement | null>(null);
+  const insideMain = useRef(false);
+  const insideSub = useRef(false);
 
   const disabledItems = useCallback(
     (id: string) => !itemPrefs.includes(id),
@@ -55,17 +58,29 @@ export function ContextMenu() {
   );
 
   useEffect(() => {
+    const MENU_W = 224;
     function onContext(e: MouseEvent) {
       if (!menuEnabled) return;
       if (isTextTarget(e.target)) return;
       e.preventDefault();
+      const rowCount =
+        CONTEXT_MENU_SIMPLE.filter((i) => itemPrefs.includes(i.id)).length +
+        CONTEXT_MENU_GROUPS.filter((g) =>
+          g.items.some((it) => itemPrefs.includes(`${g.id}:${it.id}`))
+        ).length;
+      const sep2 = rowCount > 0 ? 9 : 0;
+      const footer = 30;
+      const menuH = rowCount * 28 + 8 + sep2 + footer;
+      const pad = 8;
+      const maxX = window.innerWidth - MENU_W - pad;
+      const maxY = window.innerHeight - menuH - pad;
       setCopied(false);
       setSubmenu(null);
       setOpenGroup(null);
       setHoveredSimple(null);
       setMenu({
-        x: Math.min(e.clientX, window.innerWidth - 236 - 8),
-        y: Math.min(e.clientY, window.innerHeight - 120 - 8),
+        x: Math.max(pad, Math.min(e.clientX, maxX)),
+        y: Math.max(pad, Math.min(e.clientY, maxY)),
       });
     }
     function close() {
@@ -84,7 +99,7 @@ export function ContextMenu() {
       window.removeEventListener("blur", close);
       window.removeEventListener("scroll", close, true);
     };
-  }, [menuEnabled]);
+  }, [menuEnabled, itemPrefs]);
 
   useEffect(() => {
     if (!menu) return;
@@ -132,25 +147,33 @@ export function ContextMenu() {
     item.id === "copyLink" ? helpersState.getCopiedLabel() : item.label;
 
   function openSubmenu(group: ContextMenuGroupDef, anchor: Element) {
-    const count = group.items.filter((it) => disabledItems(`${group.id}:${it.id}`)).length;
-    const subW = 220;
-    const subH = count * 32 + 12;
+    cancelClose();
+    const items = group.items.filter((it) => disabledItems(`${group.id}:${it.id}`));
+    const count = items.length;
+    const subW = 224;
+    const subH = count * 28 + 8;
     const refPoint = anchor.getBoundingClientRect();
-    let x = refPoint.right;
+    const pad = 6;
+    // Prefer the right side; flip left if it won't fit.
+    const openLeft = refPoint.right + subW > window.innerWidth - pad;
+    let x = openLeft ? refPoint.left - subW : refPoint.right;
+    // Keep at least 8px inside the viewport.
+    x = Math.max(pad, Math.min(x, window.innerWidth - subW - pad));
+    // Vertically clamp so the submenu stays fully on screen and near the row.
     let y = refPoint.top;
-    if (x + subW > window.innerWidth - 8) {
-      x = refPoint.left - subW;
-    }
-    y = Math.min(y, window.innerHeight - subH - 8);
-    setSubmenu({ group, x, y });
+    const maxY = window.innerHeight - subH - pad;
+    if (y > maxY) y = Math.max(pad, maxY);
+    if (y < pad) y = pad;
+    setSubmenu({ group, x, y, openLeft });
   }
 
   function closeWithDelay() {
     window.clearTimeout(closeTimer.current);
     closeTimer.current = window.setTimeout(() => {
+      if (insideMain.current || insideSub.current) return;
       setSubmenu(null);
       setOpenGroup(null);
-    }, 180);
+    }, 150);
   }
   function cancelClose() {
     window.clearTimeout(closeTimer.current);
@@ -181,7 +204,14 @@ export function ContextMenu() {
         style={{ left: menu.x, top: menu.y }}
         className="animate-pop-in fixed z-[95] w-56 overflow-hidden rounded-[var(--radius-base)] border border-border bg-surface py-1 shadow-pop"
         onClick={(e) => e.stopPropagation()}
-        onMouseLeave={closeWithDelay}
+        onMouseEnter={() => {
+          insideMain.current = true;
+          cancelClose();
+        }}
+        onMouseLeave={() => {
+          insideMain.current = false;
+          closeWithDelay();
+        }}
       >
         {visibleSimple.map((item) => {
           const Icon = item.icon;
@@ -264,8 +294,14 @@ export function ContextMenu() {
           role="menu"
           aria-label={submenu.group.label}
           style={{ left: submenu.x, top: submenu.y }}
-          onPointerEnter={cancelClose}
-          onPointerLeave={closeWithDelay}
+          onPointerEnter={() => {
+            insideSub.current = true;
+            cancelClose();
+          }}
+          onPointerLeave={() => {
+            insideSub.current = false;
+            closeWithDelay();
+          }}
           onTouchStart={cancelClose}
           className="animate-pop-in fixed z-[96] w-56 overflow-hidden rounded-[var(--radius-base)] border border-border bg-surface py-1 shadow-pop"
           onClick={(e) => e.stopPropagation()}

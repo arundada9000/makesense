@@ -16,7 +16,6 @@ export function ScrollToTop() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    let raf = 0;
     function update() {
       const doc = document.documentElement;
       const max = doc.scrollHeight - window.innerHeight;
@@ -24,17 +23,12 @@ export function ScrollToTop() {
       setProgress(p);
       setVisible(p > 0.03);
     }
-    function onScroll() {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(update);
-    }
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
     update();
     return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
     };
   }, []);
 
@@ -86,7 +80,6 @@ export function ScrollToTop() {
           strokeDasharray={CIRCUMFERENCE}
           strokeDashoffset={CIRCUMFERENCE - dash}
           transform={`rotate(${rot} ${SIZE / 2} ${SIZE / 2})`}
-          className="transition-[stroke-dashoffset] duration-100 ease-out"
         />
       </svg>
       <span className="flex h-9 w-9 items-center justify-center rounded-full bg-surface text-foreground ring-1 ring-border transition-colors group-hover:text-accent">

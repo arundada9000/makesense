@@ -28,6 +28,39 @@ export type Density = "compact" | "comfortable" | "spacious";
 
 export type CursorStyle = "custom" | "default";
 
+export type CursorVariant =
+  | "dot-ring"
+  | "dot"
+  | "crosshair"
+  | "halo"
+  | "diamond"
+  | "ring"
+  | "ring-dot"
+  | "chevron"
+  | "triangle"
+  | "pulse"
+  | "asterisk"
+  | "cat-eye"
+  | "swirl"
+  | "square";
+
+export const CURSOR_VARIANTS: ReadonlyArray<{ id: CursorVariant; label: string }> = [
+  { id: "dot-ring", label: "Dot + Ring" },
+  { id: "dot", label: "Dot" },
+  { id: "ring", label: "Ring" },
+  { id: "ring-dot", label: "Ring + Dot" },
+  { id: "halo", label: "Halo" },
+  { id: "diamond", label: "Diamond" },
+  { id: "chevron", label: "Chevron" },
+  { id: "triangle", label: "Triangle" },
+  { id: "pulse", label: "Pulse" },
+  { id: "asterisk", label: "Asterisk" },
+  { id: "cat-eye", label: "Cat Eye" },
+  { id: "swirl", label: "Swirl" },
+  { id: "square", label: "Square" },
+  { id: "crosshair", label: "Crosshair" },
+];
+
 export interface ContextMenuConfig {
   enabled: boolean;
   disabledItems: string[];
@@ -58,6 +91,7 @@ interface PreferencesState {
   numberStyle: "exact" | "compact";
   defaultCurrency: string;
   cursorStyle: CursorStyle;
+  cursorVariant: CursorVariant;
   contextMenu: ContextMenuConfig;
 }
 
@@ -75,6 +109,7 @@ interface PreferencesActions {
   setNumberStyle: (style: "exact" | "compact") => void;
   setDefaultCurrency: (currency: string) => void;
   setCursorStyle: (style: CursorStyle) => void;
+  setCursorVariant: (variant: CursorVariant) => void;
   setContextMenu: (config: Partial<ContextMenuConfig>) => void;
   toggleContextMenuItem: (id: string) => void;
   resetPreferences: () => void;
@@ -94,6 +129,7 @@ const defaults: PreferencesState = {
   numberStyle: "compact",
   defaultCurrency: "NPR",
   cursorStyle: "custom",
+  cursorVariant: "dot-ring",
   contextMenu: DEFAULT_CONTEXT_MENU_CONFIG,
 };
 
@@ -116,6 +152,7 @@ export const usePreferences = create<PreferencesState & PreferencesActions>()(
       setNumberStyle: (numberStyle) => set({ numberStyle }),
       setDefaultCurrency: (defaultCurrency) => set({ defaultCurrency }),
       setCursorStyle: (cursorStyle) => set({ cursorStyle }),
+      setCursorVariant: (cursorVariant) => set({ cursorVariant }),
       setContextMenu: (partial) =>
         set((s) => ({
           contextMenu: { ...s.contextMenu, ...partial },

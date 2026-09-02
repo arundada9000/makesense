@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { Download, Upload, RotateCcw } from "lucide-react";
-import { usePreferences, THEMES, type ThemeId } from "@/stores/preferences";
+import { usePreferences, THEMES, CURSOR_VARIANTS, type ThemeId, type CursorVariant } from "@/stores/preferences";
 import { useModelStore } from "@/stores/model-store";
 import { CURRENCIES } from "@/domain/primitives/currency";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
@@ -38,6 +38,84 @@ function ContextToggle({
         className="h-4 w-4 accent-[var(--accent)]"
       />
     </li>
+  );
+}
+
+function CursorPreview({ variant }: { variant: CursorVariant }) {
+  const c = "var(--accent)";
+  const size = 18;
+  return (
+    <span className="relative grid h-6 w-6 place-items-center" aria-hidden="true">
+      <svg width={size} height={size} viewBox="0 0 20 20" fill="none">
+        {variant === "dot-ring" || variant === "ring" || variant === "ring-dot" ? (
+          <circle cx="10" cy="10" r="8" stroke={c} strokeWidth="1.5" opacity="0.6" />
+        ) : variant === "halo" ? (
+          <circle cx="10" cy="10" r="8" fill={c} opacity="0.25" />
+        ) : variant === "diamond" || variant === "square" ? (
+          <rect
+            x="4"
+            y="4"
+            width="12"
+            height="12"
+            stroke={c}
+            strokeWidth="1.5"
+            opacity="0.6"
+            transform={variant === "diamond" ? "rotate(45 10 10)" : undefined}
+          />
+        ) : variant === "crosshair" ? (
+          <>
+            <line x1="2" y1="10" x2="8" y2="10" stroke={c} strokeWidth="1.3" />
+            <line x1="12" y1="10" x2="18" y2="10" stroke={c} strokeWidth="1.3" />
+            <line x1="10" y1="2" x2="10" y2="8" stroke={c} strokeWidth="1.3" />
+            <line x1="10" y1="12" x2="10" y2="18" stroke={c} strokeWidth="1.3" />
+          </>
+        ) : variant === "chevron" ? (
+          <path
+            d="M6 6L13 10L6 14"
+            stroke={c}
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        ) : variant === "triangle" ? (
+          <path d="M10 4L17 15H3Z" fill={c} opacity="0.85" />
+        ) : variant === "pulse" ? (
+          <>
+            <circle cx="10" cy="10" r="2.5" fill={c} />
+            <circle cx="10" cy="10" r="7" stroke={c} strokeWidth="1" opacity="0.5" />
+          </>
+        ) : variant === "asterisk" ? (
+          <>
+            <line x1="10" y1="3" x2="10" y2="17" stroke={c} strokeWidth="1.4" strokeLinecap="round" />
+            <line x1="3" y1="10" x2="17" y2="10" stroke={c} strokeWidth="1.4" strokeLinecap="round" />
+            <line x1="5" y1="5" x2="15" y2="15" stroke={c} strokeWidth="1.4" strokeLinecap="round" />
+            <line x1="15" y1="5" x2="5" y2="15" stroke={c} strokeWidth="1.4" strokeLinecap="round" />
+          </>
+        ) : variant === "cat-eye" ? (
+          <>
+            <ellipse cx="10" cy="10" rx="8" ry="3.5" stroke={c} strokeWidth="1.3" />
+            <ellipse cx="10" cy="10" rx="2.4" ry="3" fill={c} />
+          </>
+        ) : variant === "swirl" ? (
+          <path
+            d="M10 4C12.8 4 15 6.2 15 9C15 11.8 12.8 14 10 14C8.2 14 6.8 12.6 6.8 10.8C6.8 9 8.2 7.6 10 7.6C11 7.6 11.6 8.2 11.6 9.2C11.6 9.8 11.1 10.4 10.4 10.4"
+            stroke={c}
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+        ) : null}
+      </svg>
+      {variant === "dot" || variant === "dot-ring" || variant === "ring-dot" || variant === "diamond" || variant === "square" || variant === "halo" ? (
+        <span
+          className="absolute rounded-full"
+          style={{
+            width: variant === "ring-dot" ? 3 : 5,
+            height: variant === "ring-dot" ? 3 : 5,
+            backgroundColor: c,
+          }}
+        />
+      ) : null}
+    </span>
   );
 }
 
@@ -228,7 +306,7 @@ export default function SettingsPage() {
 
       <Card>
         <CardHeader title="Cursor and menu" subtitle="Pointer style and right-click menu" />
-        <CardBody className="grid gap-4 sm:grid-cols-2">
+        <CardBody className="grid gap-4">
           <Field label="Cursor style" htmlFor="set-cursor">
             <Select
               id="set-cursor"
@@ -237,11 +315,38 @@ export default function SettingsPage() {
                 prefs.setCursorStyle(e.target.value as typeof prefs.cursorStyle)
               }
             >
-              <option value="custom">Custom (accent dot and ring)</option>
+              <option value="custom">Custom cursor</option>
               <option value="default">Browser default</option>
             </Select>
           </Field>
-          <label className="flex items-center justify-between gap-3 rounded-[var(--radius-base)] border border-border bg-surface-secondary px-3 py-2.5 sm:col-span-2">
+          {prefs.cursorStyle === "custom" ? (
+            <div>
+              <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">
+                Cursor variant
+              </p>
+              <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
+                {CURSOR_VARIANTS.map(({ id, label }) => {
+                  const active = prefs.cursorVariant === id;
+                  return (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => prefs.setCursorVariant(id as CursorVariant)}
+                      className={`flex flex-col items-center gap-1.5 rounded-[var(--radius-base)] border px-2 py-2.5 text-[11px] font-medium transition-all ${
+                        active
+                          ? "border-accent bg-accent-subtle text-foreground shadow-sm"
+                          : "border-border bg-surface-secondary text-muted-foreground hover:border-border-strong hover:text-foreground"
+                      }`}
+                    >
+                      <CursorPreview variant={id} />
+                      <span className="truncate w-full text-center">{label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ) : null}
+          <label className="flex items-center justify-between gap-3 rounded-[var(--radius-base)] border border-border bg-surface-secondary px-3 py-2.5">
             <span className="text-sm">Show custom right-click menu</span>
             <input
               type="checkbox"

@@ -66,41 +66,38 @@ export function SiteHeader() {
         >
           <SiteLogo />
         </Link>
-        <nav aria-label="Marketing" className="hidden items-center md:flex">
-          <div className="relative flex items-center gap-1 rounded-full border border-border bg-surface-secondary/70 p-1">
-            {NAV_LINKS.map(({ href, label, isActive }) => {
-              const active = isActive(pathname);
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  aria-current={active ? "page" : undefined}
-                  className={`group relative overflow-hidden rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 active:scale-95 ${
-                    active
-                      ? "bg-surface text-foreground shadow-sm ring-1 ring-border-strong/70"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  <span className="relative z-10 flex items-center gap-1.5">
-                    {label}
-                    {active && (
-                      <span
-                        aria-hidden="true"
-                        className="h-1.5 w-1.5 rounded-full bg-accent"
-                      />
-                    )}
-                  </span>
-                  {/* hover glow sweeping across the pill */}
+        <nav aria-label="Marketing" className="relative hidden items-center gap-5 md:flex">
+          {NAV_LINKS.map(({ href, label, isActive }) => {
+            const active = isActive(pathname);
+            return (
+              <Link
+                key={href}
+                href={href}
+                aria-current={active ? "page" : undefined}
+                className={`group relative py-2 text-sm font-medium transition-colors duration-200 ${
+                  active ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <span className="flex items-center gap-1.5">
+                  {label}
                   <span
                     aria-hidden="true"
-                    className={`absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-accent-subtle to-transparent transition-transform duration-500 ease-out group-hover:translate-x-full ${
-                      active ? "opacity-0" : "opacity-100"
+                    className={`h-1.5 w-1.5 rounded-full bg-accent transition-all duration-200 ${
+                      active
+                        ? "scale-100 opacity-100"
+                        : "scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-60"
                     }`}
                   />
-                </Link>
-              );
-            })}
-          </div>
+                </span>
+                <span
+                  aria-hidden="true"
+                  className={`absolute inset-x-0 -bottom-0.5 h-0.5 rounded-full bg-accent transition-transform duration-300 ease-out ${
+                    active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-50"
+                  }`}
+                />
+              </Link>
+            );
+          })}
         </nav>
         <div className="flex items-center gap-2.5">
           <button
