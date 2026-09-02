@@ -4,18 +4,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { usePreferences } from "@/stores/preferences";
 import {
-  ArrowLeft,
-  ArrowRight,
-  ArrowUp,
-  LayoutDashboard,
-  Target,
-  BookOpen,
-  Link2,
-  Printer,
-  Calculator,
-  Check,
-  ChevronRight,
-} from "lucide-react";
+  CONTEXT_MENU_SIMPLE,
+  CONTEXT_MENU_GROUPS,
+  type ContextMenuItemDef,
+  type ContextMenuGroupDef,
+} from "@/components/context-menu-items";
+import { Check, ChevronRight } from "lucide-react";
 
 interface MenuState {
   x: number;
@@ -23,7 +17,7 @@ interface MenuState {
 }
 
 interface SubMenuState {
-  id: string;
+  group: ContextMenuGroupDef;
   x: number;
   y: number;
 }
@@ -35,24 +29,11 @@ function isTextTarget(t: EventTarget | null): boolean {
   );
 }
 
-interface MenuItem {
-  id: string;
-  label: string;
-  icon: React.ReactNode;
-  action: () => void;
-  hint?: string;
-}
-
-interface MenuGroup {
-  id: string;
-  label: string;
-  items: Omit<MenuItem, "id">[];
-}
-
 /**
  * Branded right-click menu, customizable from Settings. Falls back to the
  * native menu over text fields and iframes, and honours the user's choices of
- * which items and groups to show. Grouped items expand into submenus.
+ * which items and groups to show. Grouped items expand into submenus. Supports
+ * hover, keyboard and touch.
  */
 export function ContextMenu() {
   const router = useRouter();
@@ -61,8 +42,12 @@ export function ContextMenu() {
   const [menu, setMenu] = useState<MenuState | null>(null);
   const [submenu, setSubmenu] = useState<SubMenuState | null>(null);
   const [copied, setCopied] = useState(false);
+  const [hoveredSimple, setHoveredSimple] = useState<string | null>(null);
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<number | undefined>(undefined);
+  const touchTimer = useRef<number | undefined>(undefined);
+  const firstTouchItem = useRef<HTMLButtonElement | null>(null);
 
   const disabledItems = useCallback(
     (id: string) => !itemPrefs.includes(id),
@@ -76,17 +61,18 @@ export function ContextMenu() {
       e.preventDefault();
       setCopied(false);
       setSubmenu(null);
-      const pad = 8;
-      const w = 232;
-      const h = 260;
+      setOpenGroup(null);
+      setHoveredSimple(null);
       setMenu({
-        x: Math.min(e.clientX, window.innerWidth - w - pad),
-        y: Math.min(e.clientY, window.innerHeight - h - pad),
+        x: Math.min(e.clientX, window.innerWidth - 236 - 8),
+        y: Math.min(e.clientY, window.innerHeight - 120 - 8),
       });
     }
     function close() {
       setMenu(null);
       setSubmenu(null);
+      setOpenGroup(null);
+      setHoveredSimple(null);
     }
     window.addEventListener("contextmenu", onContext);
     window.addEventListener("click", close);
@@ -112,105 +98,78 @@ export function ContextMenu() {
     return () => window.removeEventListener("keydown", onKey);
   }, [menu, submenu]);
 
-  const run = useCallback(
-    (action: () => void) => () => {
-      action();
-      setMenu(null);
-      setSubmenu(null);
-    },
-    []
-  );
+  const run = useCallback((action: () => void) => () => {
+    action();
+    setMenu(null);
+    setSubmenu(null);
+    setOpenGroup(null);
+    setHoveredSimple(null);
+  }, []);
 
   async function copyLink() {
     try {
       await navigator.clipboard.writeText(window.location.href);
       setCopied(true);
+      return true;
     } catch {
-      // Clipboard may be unavailable without permission.
+      return false;
     }
   }
 
   if (!menu) return null;
 
-  const simple: MenuItem[] = [
-    {
-      id: "back",
-      label: "Back",
-      icon: <ArrowLeft className="h-3.5 w-3.5" />,
-      action: () => router.back(),
-      hint: "Alt+←",
-    },
-    {
-      id: "forward",
-      label: "Forward",
-      icon: <ArrowRight className="h-3.5 w-3.5" />,
-      action: () => router.forward(),
-      hint: "Alt+→",
-    },
-    {
-      id: "top",
-      label: "Scroll to top",
-      icon: <ArrowUp className="h-3.5 w-3.5" />,
-      action: () => window.scrollTo({ top: 0, behavior: "smooth" }),
-    },
-    {
-      id: "copyLink",
-      label: copied ? "Link copied" : "Copy page link",
-      icon: copied ? <Check className="h-3.5 w-3.5" /> : <Link2 className="h-3.5 w-3.5" />,
-      action: () => void copyLink(),
-    },
-    {
-      id: "print",
-      label: "Print page",
-      icon: <Printer className="h-3.5 w-3.5" />,
-      action: () => window.print(),
-      hint: "Ctrl+P",
-    },
-  ];
+  const helpers = {
+    copyLink,
+    getCopiedLabel: () => (copied ? "Link copied" : "Copy page link"),
+  };
 
-  const groups: MenuGroup[] = [
-    {
-      id: "open",
-      label: "Open",
-      items: [
-        { label: "Dashboard", icon: <LayoutDashboard className="h-3.5 w-3.5" />, action: () => router.push("/dashboard") },
-        { label: "Goals", icon: <Target className="h-3.5 w-3.5" />, action: () => router.push("/goals") },
-        { label: "New model", icon: <Calculator className="h-3.5 w-3.5" />, action: () => router.push("/models?new=1") },
-        { label: "User manual", icon: <BookOpen className="h-3.5 w-3.5" />, action: () => router.push("/manual") },
-        { label: "Settings", icon: <SettingsDots className="h-3.5 w-3.5" />, action: () => router.push("/settings") },
-      ],
-    },
-  ];
-
-  const visibleSimple = simple.filter((i) => disabledItems(i.id));
-  const visibleGroups = groups.filter((g) =>
-    g.items.some((item) => disabledItems(`${g.id}:${item.label}`))
+  const visibleSimple = CONTEXT_MENU_SIMPLE.filter((i) => disabledItems(i.id));
+  const visibleGroups = CONTEXT_MENU_GROUPS.filter((g) =>
+    g.items.some((item) => disabledItems(`${g.id}:${item.id}`))
   );
 
-  function openSubmenu(id: string, e: React.MouseEvent) {
-    const group = groups.find((g) => g.id === id);
-    if (!group) return;
-    const count = group.items.filter((it) => disabledItems(`${id}:${it.label}`)).length;
-    const subW = 208;
+  const itemLabel = (item: ContextMenuItemDef, helpersState: typeof helpers) =>
+    item.id === "copyLink" ? helpersState.getCopiedLabel() : item.label;
+
+  function openSubmenu(group: ContextMenuGroupDef, anchor: Element) {
+    const count = group.items.filter((it) => disabledItems(`${group.id}:${it.id}`)).length;
+    const subW = 220;
     const subH = count * 32 + 12;
-    const rect = e.currentTarget.getBoundingClientRect();
-    let x = rect.right;
-    let y = rect.top;
+    const refPoint = anchor.getBoundingClientRect();
+    let x = refPoint.right;
+    let y = refPoint.top;
     if (x + subW > window.innerWidth - 8) {
-      x = rect.left - subW;
+      x = refPoint.left - subW;
     }
     y = Math.min(y, window.innerHeight - subH - 8);
-    setSubmenu({ id, x, y });
+    setSubmenu({ group, x, y });
   }
 
   function closeWithDelay() {
     window.clearTimeout(closeTimer.current);
     closeTimer.current = window.setTimeout(() => {
       setSubmenu(null);
-    }, 160);
+      setOpenGroup(null);
+    }, 180);
   }
   function cancelClose() {
     window.clearTimeout(closeTimer.current);
+  }
+
+  // Touch support: first tap on a group opens the submenu, second tap navigates.
+  function handleGroupTouch(group: ContextMenuGroupDef, e: React.TouchEvent) {
+    window.clearTimeout(touchTimer.current);
+    const target = e.currentTarget as HTMLButtonElement;
+    if (openGroup === group.id && firstTouchItem.current === target) {
+      // Already open; let the tap fall through to the click handler.
+      return;
+    }
+    firstTouchItem.current = target;
+    setOpenGroup(group.id);
+    openSubmenu(group, target);
+    touchTimer.current = window.setTimeout(() => {
+      firstTouchItem.current = null;
+    }, 400);
   }
 
   return (
@@ -224,39 +183,72 @@ export function ContextMenu() {
         onClick={(e) => e.stopPropagation()}
         onMouseLeave={closeWithDelay}
       >
-        {visibleSimple.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            role="menuitem"
-            onClick={run(item.action)}
-            className="flex w-full items-center gap-2.5 px-3 py-1.5 text-left text-xs transition-colors hover:bg-surface-secondary"
-          >
-            <span className="text-muted">{item.icon}</span>
-            <span className="flex-1">{item.label}</span>
-            {item.hint ? (
-              <span className="text-[10px] text-muted">{item.hint}</span>
-            ) : null}
-          </button>
-        ))}
+        {visibleSimple.map((item) => {
+          const Icon = item.icon;
+          const label = itemLabel(item, helpers);
+          const activeHover = hoveredSimple === item.id;
+          return (
+            <button
+              key={item.id}
+              type="button"
+              role="menuitem"
+              onClick={run(() => item.action?.(router, helpers))}
+              onPointerEnter={() => setHoveredSimple(item.id)}
+              className={`flex w-full items-center gap-2.5 px-3 py-1.5 text-left text-xs transition-colors ${
+                activeHover ? "bg-accent-subtle text-foreground" : "hover:bg-surface-secondary"
+              }`}
+            >
+              <span className={activeHover ? "text-accent" : "text-muted"}>
+                {item.id === "copyLink" && copied ? (
+                  <Check className="h-3.5 w-3.5" />
+                ) : (
+                  <Icon className="h-3.5 w-3.5" />
+                )}
+              </span>
+              <span className="flex-1">{label}</span>
+              {item.hint ? (
+                <span className="text-[10px] text-muted">{item.hint}</span>
+              ) : null}
+            </button>
+          );
+        })}
 
         {visibleSimple.length > 0 && visibleGroups.length > 0 ? (
           <div role="separator" className="my-1 h-px bg-border" />
         ) : null}
 
-        {visibleGroups.map((group) => (
-          <button
-            key={group.id}
-            type="button"
-            role="menuitem"
-            onClick={() => {}}
-            onMouseEnter={(e) => openSubmenu(group.id, e)}
-            className="flex w-full items-center gap-2.5 px-3 py-1.5 text-left text-xs transition-colors hover:bg-surface-secondary"
-          >
-            <span className="flex-1">{group.label}</span>
-            <ChevronRight className="h-3.5 w-3.5 text-muted" />
-          </button>
-        ))}
+        {visibleGroups.map((group) => {
+          const activeHover = openGroup === group.id;
+          return (
+            <button
+              key={group.id}
+              type="button"
+              role="menuitem"
+              aria-haspopup="menu"
+              aria-expanded={activeHover}
+              onPointerEnter={(e) => {
+                setOpenGroup(group.id);
+                openSubmenu(group, e.currentTarget);
+              }}
+              onTouchStart={(e) => handleGroupTouch(group, e)}
+              onClick={(e) => {
+                if (!submenu || submenu.group.id !== group.id) {
+                  openSubmenu(group, e.currentTarget);
+                }
+              }}
+              className={`flex w-full items-center gap-2.5 px-3 py-1.5 text-left text-xs transition-colors ${
+                activeHover ? "bg-accent-subtle text-foreground" : "hover:bg-surface-secondary"
+              }`}
+            >
+              <span className="flex-1">{group.label}</span>
+              <ChevronRight
+                className={`h-3.5 w-3.5 transition-transform ${
+                  activeHover ? "translate-x-0.5 text-accent" : "text-muted"
+                }`}
+              />
+            </button>
+          );
+        })}
 
         {visibleGroups.length > 0 ? (
           <div role="separator" className="my-1 h-px bg-border" />
@@ -270,51 +262,36 @@ export function ContextMenu() {
       {submenu ? (
         <div
           role="menu"
-          aria-label={submenu.id}
+          aria-label={submenu.group.label}
           style={{ left: submenu.x, top: submenu.y }}
-          onMouseEnter={cancelClose}
-          onMouseLeave={closeWithDelay}
-          className="animate-pop-in fixed z-[96] w-52 overflow-hidden rounded-[var(--radius-base)] border border-border bg-surface py-1 shadow-pop"
+          onPointerEnter={cancelClose}
+          onPointerLeave={closeWithDelay}
+          onTouchStart={cancelClose}
+          className="animate-pop-in fixed z-[96] w-56 overflow-hidden rounded-[var(--radius-base)] border border-border bg-surface py-1 shadow-pop"
           onClick={(e) => e.stopPropagation()}
           onContextMenu={(e) => e.preventDefault()}
         >
-          {(() => {
-            const group = groups.find((g) => g.id === submenu.id);
-            if (!group) return null;
-            return group.items
-              .filter((item) => disabledItems(`${submenu.id}:${item.label}`))
-              .map((item) => (
+          {submenu.group.items
+            .filter((item) => disabledItems(`${submenu.group.id}:${item.id}`))
+            .map((item) => {
+              const Icon = item.icon;
+              return (
                 <button
-                  key={item.label}
+                  key={item.id}
                   type="button"
                   role="menuitem"
-                  onClick={run(item.action)}
+                  onClick={run(() => item.action?.(router, helpers))}
                   className="flex w-full items-center gap-2.5 px-3 py-1.5 text-left text-xs transition-colors hover:bg-surface-secondary"
                 >
-                  <span className="text-muted">{item.icon}</span>
+                  <span className="text-muted">
+                    <Icon className="h-3.5 w-3.5" />
+                  </span>
                   <span className="flex-1">{item.label}</span>
                 </button>
-              ));
-          })()}
+              );
+            })}
         </div>
       ) : null}
     </>
-  );
-}
-
-function SettingsDots({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-      <circle cx="12" cy="12" r="3" />
-    </svg>
   );
 }

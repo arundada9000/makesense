@@ -66,29 +66,41 @@ export function SiteHeader() {
         >
           <SiteLogo />
         </Link>
-        <nav aria-label="Marketing" className="hidden items-center gap-1.5 md:flex">
-          {NAV_LINKS.map(({ href, label, isActive }) => {
-            const active = isActive(pathname);
-            return (
-              <Link
-                key={href}
-                href={href}
-                className={`relative rounded-[var(--radius-base)] px-3.5 py-1.5 text-xs font-medium transition-all duration-200 ${
-                  active
-                    ? "bg-surface-secondary text-foreground shadow-xs border border-border/80 font-semibold"
-                    : "text-muted-foreground hover:bg-surface-secondary/70 hover:text-foreground border border-transparent"
-                }`}
-              >
-                {label}
-                {active && (
+        <nav aria-label="Marketing" className="hidden items-center md:flex">
+          <div className="relative flex items-center gap-1 rounded-full border border-border bg-surface-secondary/70 p-1">
+            {NAV_LINKS.map(({ href, label, isActive }) => {
+              const active = isActive(pathname);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  aria-current={active ? "page" : undefined}
+                  className={`group relative overflow-hidden rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 active:scale-95 ${
+                    active
+                      ? "bg-surface text-foreground shadow-sm ring-1 ring-border-strong/70"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  <span className="relative z-10 flex items-center gap-1.5">
+                    {label}
+                    {active && (
+                      <span
+                        aria-hidden="true"
+                        className="h-1.5 w-1.5 rounded-full bg-accent"
+                      />
+                    )}
+                  </span>
+                  {/* hover glow sweeping across the pill */}
                   <span
                     aria-hidden="true"
-                    className="absolute -bottom-1.5 left-1/2 h-0.5 w-3 -translate-x-1/2 rounded-full bg-accent"
+                    className={`absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-accent-subtle to-transparent transition-transform duration-500 ease-out group-hover:translate-x-full ${
+                      active ? "opacity-0" : "opacity-100"
+                    }`}
                   />
-                )}
-              </Link>
-            );
-          })}
+                </Link>
+              );
+            })}
+          </div>
         </nav>
         <div className="flex items-center gap-2.5">
           <button
@@ -103,13 +115,13 @@ export function SiteHeader() {
           <Link
             href="/settings"
             aria-label="Open settings"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-[var(--radius-base)] text-muted-foreground transition-colors hover:bg-surface-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-[var(--radius-base)] text-muted-foreground transition-all duration-200 hover:scale-105 hover:bg-surface-secondary hover:text-foreground active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             <Settings className="h-[18px] w-[18px]" />
           </Link>
           <Link
             href="/dashboard"
-            className="group inline-flex h-9 items-center gap-1.5 rounded-[var(--radius-base)] bg-accent px-4 text-xs font-semibold text-accent-foreground shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-hover active:translate-y-0"
+            className="group inline-flex h-9 items-center gap-1.5 rounded-[var(--radius-base)] bg-accent px-4 text-xs font-semibold text-accent-foreground shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-pop active:translate-y-0 active:scale-[0.97]"
           >
             <Sparkles className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-12" />
             <span className="hidden sm:inline">Open app</span>

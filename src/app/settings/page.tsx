@@ -9,26 +9,10 @@ import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Select } from "@/components/ui/select";
-
-const CONTEXT_MENU_SIMPLE: ReadonlyArray<{ id: string; label: string }> = [
-  { id: "back", label: "Back" },
-  { id: "forward", label: "Forward" },
-  { id: "top", label: "Scroll to top" },
-  { id: "copyLink", label: "Copy page link" },
-  { id: "print", label: "Print page" },
-];
-
-const CONTEXT_MENU_GROUPS: ReadonlyArray<{
-  id: string;
-  label: string;
-  items: string[];
-}> = [
-  {
-    id: "open",
-    label: "Open",
-    items: ["Dashboard", "Goals", "New model", "User manual", "Settings"],
-  },
-];
+import {
+  CONTEXT_MENU_SIMPLE,
+  CONTEXT_MENU_GROUPS,
+} from "@/components/context-menu-items";
 
 function ContextToggle({
   id,
@@ -302,13 +286,13 @@ export default function SettingsPage() {
                   >
                     <p className="pb-1 text-xs font-medium">{group.label}</p>
                     <ul className="space-y-1">
-                      {group.items.map((label) => {
-                        const id = `${group.id}:${label}`;
+                      {group.items.map((item) => {
+                        const id = `${group.id}:${item.id}`;
                         return (
                           <ContextToggle
                             key={id}
                             id={id}
-                            label={label}
+                            label={item.label}
                             checked={!prefs.contextMenu.disabledItems.includes(id)}
                             onChange={() => prefs.toggleContextMenuItem(id)}
                           />
