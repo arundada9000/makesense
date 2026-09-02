@@ -107,11 +107,12 @@ function CursorPreview({ variant }: { variant: CursorVariant }) {
       </svg>
       {variant === "dot" || variant === "dot-ring" || variant === "ring-dot" || variant === "diamond" || variant === "square" || variant === "halo" ? (
         <span
-          className="absolute rounded-full"
+          className="absolute left-1/2 top-1/2 rounded-full"
           style={{
             width: variant === "ring-dot" ? 3 : 5,
             height: variant === "ring-dot" ? 3 : 5,
             backgroundColor: c,
+            transform: "translate(-50%, -50%)",
           }}
         />
       ) : null}
