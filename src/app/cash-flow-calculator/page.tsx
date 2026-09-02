@@ -3,16 +3,17 @@ import { CalculatorShell } from "@/components/calculators/calculator-shell";
 import { CashFlowCalculatorWidget } from "@/components/calculators/widgets/cashflow";
 
 export const metadata: Metadata = {
-  title: "Cash Flow Calculator",
+  title: "Free Cash Flow Calculator - 12-Month Cash Projection",
   description:
-    "Project your cash balance month by month from opening cash, inflows and outflows.",
+    "Project your cash balance month by month from opening cash, inflows and outflows. Free cash flow calculator with formula and example.",
   alternates: { canonical: "/cash-flow-calculator" },
 };
 
 export default function CashFlowCalculatorPage() {
   return (
     <CalculatorShell
-      title="Cash flow calculator"
+      path="/cash-flow-calculator"
+      title="Free cash flow calculator"
       intro="Profitable businesses still die from empty bank accounts. This projects your actual cash balance forward from what you hold today, what comes in each month, and what goes out."
       formula={
         <p>

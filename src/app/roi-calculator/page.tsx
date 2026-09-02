@@ -3,16 +3,17 @@ import { CalculatorShell } from "@/components/calculators/calculator-shell";
 import { RoiCalculatorWidget } from "@/components/calculators/widgets/roi";
 
 export const metadata: Metadata = {
-  title: "ROI Calculator",
+  title: "Free ROI Calculator - Return on Investment & Payback Period",
   description:
-    "Calculate return on investment, return multiple and payback period for any project or purchase.",
+    "Calculate return on investment, return multiple and payback period for any project or purchase. Free ROI calculator with formula and worked example.",
   alternates: { canonical: "/roi-calculator" },
 };
 
 export default function RoiCalculatorPage() {
   return (
     <CalculatorShell
-      title="ROI calculator"
+      path="/roi-calculator"
+      title="Free ROI calculator"
       intro="Return on investment turns a spending decision into a comparable number. Enter what you invested and the yearly gain it produces to see ROI, the return multiple, and how long until the investment pays for itself."
       formula={
         <p>

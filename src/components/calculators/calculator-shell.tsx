@@ -7,16 +7,39 @@ export interface FaqItem {
   a: string;
 }
 
-/** Schema.org JSON-LD for rich results on calculator pages. */
+export interface HowToStep {
+  name?: string;
+  text: string;
+}
+
+export interface CalcSection {
+  name: string;
+  href: string;
+}
+
+const SITE_URL = "https://makesensebusiness.vercel.app";
+
+/** Schema.org JSON-LD for rich results, answer engines and AI crawlers. */
 function StructuredData({
+  path,
   title,
   intro,
   faq,
+  keywords,
+  featureList,
+  howToSteps,
+  section,
 }: {
+  path: string;
   title: string;
   intro: string;
   faq: FaqItem[];
+  keywords?: string[];
+  featureList?: string[];
+  howToSteps?: HowToStep[];
+  section: CalcSection;
 }) {
+  const url = `${SITE_URL}${path}`;
   const data = {
     "@context": "https://schema.org",
     "@graph": [
@@ -27,28 +50,35 @@ function StructuredData({
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://makesensebusiness.vercel.app/",
+            item: SITE_URL,
           },
           {
             "@type": "ListItem",
             position: 2,
-            name: "Calculators",
-            item: "https://makesensebusiness.vercel.app/calculators",
+            name: section.name,
+            item: `${SITE_URL}${section.href}`,
           },
           {
             "@type": "ListItem",
             position: 3,
             name: title,
+            item: url,
           },
         ],
       },
       {
         "@type": "WebApplication",
         name: title,
+        url,
+        description: intro,
         applicationCategory: "FinanceApplication",
         operatingSystem: "Any",
-        description: intro,
+        inLanguage: "en",
+        softwareVersion: "1.0",
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        author: { "@type": "Person", name: "Arun Neupane" },
+        publisher: { "@type": "Organization", name: "MakeSense" },
+        ...(featureList?.length ? { featureList } : {}),
       },
       {
         "@type": "FAQPage",
@@ -58,13 +88,39 @@ function StructuredData({
           acceptedAnswer: { "@type": "Answer", text: item.a },
         })),
       },
+      ...(howToSteps && howToSteps.length
+        ? [
+            {
+              "@type": "HowTo",
+              name: `How to calculate ${title.toLowerCase()}`,
+              description: `Step-by-step ${title.toLowerCase()} calculation with a worked example.`,
+              step: howToSteps.map((s, i) => ({
+                "@type": "HowToStep",
+                position: i + 1,
+                ...(s.name ? { name: s.name } : {}),
+                text: s.text,
+              })),
+            },
+          ]
+        : []),
+      ...(keywords?.length
+        ? [
+            {
+              "@type": "DefinedTermSet",
+              name: title,
+              hasDefinedTerm: keywords.map((k) => ({
+                "@type": "DefinedTerm",
+                name: k,
+              })),
+            },
+          ]
+        : []),
     ],
   };
   return (
     <script
       type="application/ld+json"
-      // Structured content is fully controlled by us, never user input.
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
     />
   );
 }
@@ -75,6 +131,7 @@ function StructuredData({
  * page is a thin wrapper around another.
  */
 export function CalculatorShell({
+  path,
   title,
   intro,
   children,
@@ -83,7 +140,15 @@ export function CalculatorShell({
   mistakes,
   faq,
   related,
+  relatedDisclaimers,
+  keywords,
+  featureList,
+  howToSteps,
+  whatAffects,
+  updated,
+  section = { name: "Calculators", href: "/calculators" },
 }: {
+  path: string;
   title: string;
   intro: string;
   children: React.ReactNode;
@@ -92,20 +157,42 @@ export function CalculatorShell({
   mistakes: string[];
   faq: FaqItem[];
   related: Array<{ href: string; label: string }>;
+  relatedDisclaimers?: string[];
+  keywords?: string[];
+  featureList?: string[];
+  howToSteps?: HowToStep[];
+  whatAffects?: React.ReactNode;
+  updated?: string;
+  section?: CalcSection;
 }) {
   return (
     <div className="flex min-h-dvh flex-col">
-      <StructuredData title={title} intro={intro} faq={faq} />
+      <StructuredData
+        path={path}
+        title={title}
+        intro={intro}
+        faq={faq}
+        keywords={keywords}
+        featureList={featureList}
+        howToSteps={howToSteps}
+        section={section}
+      />
       <SiteHeader />
 
       <main id="main-content" className="mx-auto w-full max-w-4xl px-4 pb-16 md:px-6">
         <section className="pt-8 md:pt-12">
+          <p className="text-xs font-semibold uppercase tracking-widest text-accent">
+            Free calculator
+          </p>
           <h1 className="text-balance text-2xl font-semibold tracking-tight md:text-4xl">
             {title}
           </h1>
           <p className="mt-3 max-w-2xl text-pretty text-sm leading-relaxed text-muted-foreground md:text-base">
             {intro}
           </p>
+          {updated && (
+            <p className="mt-2 text-[11px] text-muted">Last updated: {updated}</p>
+          )}
         </section>
 
         <section aria-label="Interactive calculator" className="mt-8">
@@ -114,6 +201,27 @@ export function CalculatorShell({
 
         <Section title="How the formula works">{formula}</Section>
         <Section title="Worked example">{example}</Section>
+        {howToSteps && howToSteps.length > 0 && (
+          <Section title="How to use the calculator">
+            <ol className="space-y-3">
+              {howToSteps.map((step, i) => (
+                <li key={i} className="flex gap-3">
+                  <span
+                    aria-hidden="true"
+                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-subtle font-mono text-[11px] font-bold text-accent"
+                  >
+                    {i + 1}
+                  </span>
+                  <div>
+                    {step.name && <strong className="block text-sm">{step.name}</strong>}
+                    <p>{step.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Section>
+        )}
+        {whatAffects && <Section title="What affects the result">{whatAffects}</Section>}
         <Section title="Common mistakes">
           <ul className="space-y-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">
             {mistakes.map((m) => (
@@ -152,6 +260,12 @@ export function CalculatorShell({
                 {r.label}
               </Link>
             ))}
+            <Link
+              href={section.href}
+              className="inline-flex h-9 items-center rounded-full border border-border bg-surface px-4 text-xs font-medium transition-colors hover:border-accent hover:text-accent"
+            >
+              All {section.name.toLowerCase()}
+            </Link>
           </div>
         </Section>
 
@@ -159,6 +273,9 @@ export function CalculatorShell({
           Results are arithmetic on the numbers you enter, not predictions.
           Validate important figures with an accountant before making financial
           commitments.
+          {relatedDisclaimers?.length
+            ? ` ${relatedDisclaimers.join(" ")}`
+            : ""}
         </p>
       </main>
 

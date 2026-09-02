@@ -3,15 +3,16 @@ import { CalculatorShell } from "@/components/calculators/calculator-shell";
 import { TaxCalculatorWidget } from "@/components/calculators/widgets/tax";
 
 export const metadata: Metadata = {
-  title: "Corporate Tax Calculator",
+  title: "Corporate Tax Calculator - Annual Tax & Loss Carryforward",
   description:
-    "Estimate corporate income tax on annual profit with optional loss carryforward.",
+    "Estimate corporate income tax on annual profit with optional loss carryforward. Free corporate tax calculator with formula and example.",
   alternates: { canonical: "/tax-calculator" },
 };
 
 export default function TaxCalculatorPage() {
   return (
     <CalculatorShell
+      path="/tax-calculator"
       title="Corporate tax calculator"
       intro="A straightforward estimate of what your business owes in corporate income tax for a year, including how prior-year losses can reduce the bill where the rules allow carryforward."
       formula={

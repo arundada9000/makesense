@@ -3,16 +3,17 @@ import { CalculatorShell } from "@/components/calculators/calculator-shell";
 import { PricingCalculatorWidget } from "@/components/calculators/widgets/pricing";
 
 export const metadata: Metadata = {
-  title: "Pricing Calculator",
+  title: "Free Pricing Calculator - Target Margin, Markup & Price",
   description:
-    "Set a price from unit cost and target gross margin, and compare against competitor pricing.",
+    "Set a price from unit cost and target gross margin, and compare against competitor pricing. Free pricing calculator with formula and example.",
   alternates: { canonical: "/pricing-calculator" },
 };
 
 export default function PricingCalculatorPage() {
   return (
     <CalculatorShell
-      title="Pricing calculator"
+      path="/pricing-calculator"
+      title="Free pricing calculator"
       intro="Cost-plus pricing is a floor, not a strategy. Enter what one sale costs you and the margin you need; this shows the minimum price that hits your target, how much markup that implies, and where it sits against a competitor."
       formula={
         <p>

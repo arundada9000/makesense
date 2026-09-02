@@ -3,16 +3,17 @@ import { CalculatorShell } from "@/components/calculators/calculator-shell";
 import { VatCalculatorWidget } from "@/components/calculators/widgets/vat";
 
 export const metadata: Metadata = {
-  title: "VAT and GST Calculator",
+  title: "Free VAT & GST Calculator - Add or Split Tax",
   description:
-    "Split tax-inclusive prices or add tax on top: net amount, tax portion and gross total for any VAT or GST rate.",
+    "Split tax-inclusive prices or add tax on top: net amount, tax portion and gross total for any VAT or GST rate. Free calculator with formula.",
   alternates: { canonical: "/vat-calculator" },
 };
 
 export default function VatCalculatorPage() {
   return (
     <CalculatorShell
-      title="VAT and GST calculator"
+      path="/vat-calculator"
+      title="Free VAT and GST calculator"
       intro="Two jobs in one tool: take a tax-inclusive price and split out the tax portion, or take a net price and add the tax on top. Works with any rate, including Nepal's 13 percent VAT."
       formula={
         <p>

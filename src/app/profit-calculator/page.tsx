@@ -3,16 +3,17 @@ import { CalculatorShell } from "@/components/calculators/calculator-shell";
 import { ProfitCalculatorWidget } from "@/components/calculators/widgets/profit";
 
 export const metadata: Metadata = {
-  title: "Profit Margin Calculator",
+  title: "Free Profit Margin Calculator - Gross, Operating & Net Margin",
   description:
-    "Calculate gross, operating and net profit with margins and tax for any period.",
+    "Calculate gross, operating and net profit with margins and tax for any period. Free profit margin calculator with formula and worked example.",
   alternates: { canonical: "/profit-calculator" },
 };
 
 export default function ProfitCalculatorPage() {
   return (
     <CalculatorShell
-      title="Profit margin calculator"
+      path="/profit-calculator"
+      title="Free profit margin calculator"
       intro="Turn a revenue figure into the full profit waterfall: gross profit after direct costs, operating profit after overheads, and net profit after tax. Each stage has its own margin, and each tells a different story."
       formula={
         <p>

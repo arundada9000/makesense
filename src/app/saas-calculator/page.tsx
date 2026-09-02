@@ -3,16 +3,17 @@ import { CalculatorShell } from "@/components/calculators/calculator-shell";
 import { SaasCalculatorWidget } from "@/components/calculators/widgets/saas";
 
 export const metadata: Metadata = {
-  title: "SaaS Metrics Calculator",
+  title: "SaaS Metrics Calculator - MRR, ARR, Churn & LTV",
   description:
-    "Calculate ARR, ARPU, net customer growth, churn and LTV from MRR and subscriber counts.",
+    "Calculate ARR, ARPU, net customer growth, churn and LTV from MRR and subscriber counts. Free SaaS metrics calculator with formula and example.",
   alternates: { canonical: "/saas-calculator" },
 };
 
 export default function SaasCalculatorPage() {
   return (
     <CalculatorShell
-      title="SaaS metrics calculator"
+      path="/saas-calculator"
+      title="Free SaaS metrics calculator"
       intro="Subscription businesses live on a handful of numbers. From MRR, subscriber count, churn and new signups you get ARR, revenue per user, whether the customer base is actually growing, and lifetime value at your current churn."
       formula={
         <p>
