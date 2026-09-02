@@ -194,10 +194,10 @@ export function ContextMenu() {
     const subW = 208;
     const subH = count * 32 + 12;
     const rect = e.currentTarget.getBoundingClientRect();
-    let x = rect.right + 4;
-    let y = rect.top - 8;
+    let x = rect.right;
+    let y = rect.top;
     if (x + subW > window.innerWidth - 8) {
-      x = rect.left - subW - 4;
+      x = rect.left - subW;
     }
     y = Math.min(y, window.innerHeight - subH - 8);
     setSubmenu({ id, x, y });
@@ -214,56 +214,58 @@ export function ContextMenu() {
   }
 
   return (
-    <div
-      ref={ref}
-      role="menu"
-      aria-label="Page actions"
-      style={{ left: menu.x, top: menu.y }}
-      className="animate-pop-in fixed z-[95] w-56 overflow-hidden rounded-[var(--radius-base)] border border-border bg-surface py-1 shadow-pop"
-      onClick={(e) => e.stopPropagation()}
-      onMouseLeave={closeWithDelay}
-    >
-      {visibleSimple.map((item) => (
-        <button
-          key={item.id}
-          type="button"
-          role="menuitem"
-          onClick={run(item.action)}
-          className="flex w-full items-center gap-2.5 px-3 py-1.5 text-left text-xs transition-colors hover:bg-surface-secondary"
-        >
-          <span className="text-muted">{item.icon}</span>
-          <span className="flex-1">{item.label}</span>
-          {item.hint ? (
-            <span className="text-[10px] text-muted">{item.hint}</span>
-          ) : null}
-        </button>
-      ))}
+    <>
+      <div
+        ref={ref}
+        role="menu"
+        aria-label="Page actions"
+        style={{ left: menu.x, top: menu.y }}
+        className="animate-pop-in fixed z-[95] w-56 overflow-hidden rounded-[var(--radius-base)] border border-border bg-surface py-1 shadow-pop"
+        onClick={(e) => e.stopPropagation()}
+        onMouseLeave={closeWithDelay}
+      >
+        {visibleSimple.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            role="menuitem"
+            onClick={run(item.action)}
+            className="flex w-full items-center gap-2.5 px-3 py-1.5 text-left text-xs transition-colors hover:bg-surface-secondary"
+          >
+            <span className="text-muted">{item.icon}</span>
+            <span className="flex-1">{item.label}</span>
+            {item.hint ? (
+              <span className="text-[10px] text-muted">{item.hint}</span>
+            ) : null}
+          </button>
+        ))}
 
-      {visibleSimple.length > 0 && visibleGroups.length > 0 ? (
-        <div role="separator" className="my-1 h-px bg-border" />
-      ) : null}
+        {visibleSimple.length > 0 && visibleGroups.length > 0 ? (
+          <div role="separator" className="my-1 h-px bg-border" />
+        ) : null}
 
-      {visibleGroups.map((group) => (
-        <button
-          key={group.id}
-          type="button"
-          role="menuitem"
-          onClick={() => {}}
-          onMouseEnter={(e) => openSubmenu(group.id, e)}
-          className="flex w-full items-center gap-2.5 px-3 py-1.5 text-left text-xs transition-colors hover:bg-surface-secondary"
-        >
-          <span className="flex-1">{group.label}</span>
-          <ChevronRight className="h-3.5 w-3.5 text-muted" />
-        </button>
-      ))}
+        {visibleGroups.map((group) => (
+          <button
+            key={group.id}
+            type="button"
+            role="menuitem"
+            onClick={() => {}}
+            onMouseEnter={(e) => openSubmenu(group.id, e)}
+            className="flex w-full items-center gap-2.5 px-3 py-1.5 text-left text-xs transition-colors hover:bg-surface-secondary"
+          >
+            <span className="flex-1">{group.label}</span>
+            <ChevronRight className="h-3.5 w-3.5 text-muted" />
+          </button>
+        ))}
 
-      {visibleGroups.length > 0 ? (
-        <div role="separator" className="my-1 h-px bg-border" />
-      ) : null}
+        {visibleGroups.length > 0 ? (
+          <div role="separator" className="my-1 h-px bg-border" />
+        ) : null}
 
-      <p className="px-3 pb-1 pt-0.5 text-[10px] leading-relaxed text-muted">
-        MakeSense: numbers that make sense
-      </p>
+        <p className="px-3 pb-1 pt-0.5 text-[10px] leading-relaxed text-muted">
+          MakeSense: numbers that make sense
+        </p>
+      </div>
 
       {submenu ? (
         <div
@@ -274,6 +276,7 @@ export function ContextMenu() {
           onMouseLeave={closeWithDelay}
           className="animate-pop-in fixed z-[96] w-52 overflow-hidden rounded-[var(--radius-base)] border border-border bg-surface py-1 shadow-pop"
           onClick={(e) => e.stopPropagation()}
+          onContextMenu={(e) => e.preventDefault()}
         >
           {(() => {
             const group = groups.find((g) => g.id === submenu.id);
@@ -295,7 +298,7 @@ export function ContextMenu() {
           })()}
         </div>
       ) : null}
-    </div>
+    </>
   );
 }
 
