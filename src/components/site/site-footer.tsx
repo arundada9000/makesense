@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Globe, ExternalLink } from "lucide-react";
+import { InstallButton } from "@/components/site/install-button";
 
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -30,15 +31,6 @@ function LinkedinIcon({ className }: { className?: string }) {
 
 const COLUMNS: { title: string; links: Array<[string, string]> }[] = [
   {
-    title: "Product",
-    links: [
-      ["Open the app", "/dashboard"],
-      ["Model templates", "/models?new=1"],
-      ["Compare models", "/compare"],
-      ["Printable reports", "/manual#reports"],
-    ],
-  },
-  {
     title: "Calculators",
     links: [
       ["Break-even", "/break-even-calculator"],
@@ -48,12 +40,22 @@ const COLUMNS: { title: string; links: Array<[string, string]> }[] = [
     ],
   },
   {
+    title: "Personal finance",
+    links: [
+      ["Salary calculator", "/personal-finance/salary-calculator"],
+      ["Savings goal calculator", "/personal-finance/savings-goal-calculator"],
+      ["Income and expenses", "/personal-finance/income-expense-calculator"],
+      ["Emergency fund", "/personal-finance/emergency-fund-calculator"],
+    ],
+  },
+  {
     title: "Resources",
     links: [
       ["User manual", "/manual"],
-      ["Keyboard shortcuts", "/manual#shortcuts"],
-      ["Formula reference", "/manual#formulas"],
-      ["FAQ", "/manual#faq"],
+      ["Startup runway guide", "/guides/how-to-calculate-startup-runway"],
+      ["Estimate a company's revenue", "/guides/how-to-estimate-a-companys-revenue"],
+      ["LTV:CAC guide", "/guides/how-to-calculate-ltv-cac"],
+      ["All guides", "/guides"],
     ],
   },
   {
@@ -97,10 +99,13 @@ export function SiteFooter() {
             <div>
               <p className="text-sm font-semibold tracking-tight">MakeSense</p>
               <p className="mt-2 max-w-xs text-xs leading-relaxed text-muted-foreground">
-                A business model simulator that runs entirely on your device.
-                Model revenue, costs, tax, financing and scenarios with
-                transparent formulas: no account, no uploads, no tracking.
+                Calculators and a full simulator for business and everyday
+                finance, running entirely on your device with transparent
+                formulas: no account, no uploads, no tracking.
               </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              <InstallButton />
             </div>
             <div className="flex items-center gap-2 pt-1">
               {SOCIAL_LINKS.map(({ name, href, icon: Icon }) => (
