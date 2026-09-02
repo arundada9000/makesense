@@ -14,18 +14,67 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
+const SITE_URL = "https://makesensebusiness.vercel.app";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://makesensebusiness.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "MakeSense | Business Model Simulator",
+    default: "Free Business & Personal Finance Calculators | MakeSense",
     template: "%s | MakeSense",
   },
   description:
-    "Model revenue, costs, cash flow, tax and financing for your business. Runs entirely on your device.",
+    "Free calculators for business and everyday money: startup runway, revenue projection, profitability, LTV:CAC, break-even, salary, savings goals and more. Every formula explained with worked examples. Runs entirely on your device.",
   applicationName: "MakeSense",
+  authors: [{ name: "Arun Neupane", url: "https://arunneupane.vercel.app" }],
+  creator: "Arun Neupane",
+  publisher: "MakeSense",
+  keywords: [
+    "business calculator",
+    "startup runway calculator",
+    "revenue projection calculator",
+    "profitability calculator",
+    "ltv cac calculator",
+    "break-even calculator",
+    "personal finance calculator",
+    "salary calculator",
+    "savings goal calculator",
+    "income vs expenses calculator",
+    "emergency fund calculator",
+    "business model simulator",
+    "startup financial modeling",
+    "free online business calculator",
+    "small business calculator",
+    "startup metrics calculator",
+  ],
+  category: "business",
+  alternates: {
+    canonical: SITE_URL,
+  },
   openGraph: {
     siteName: "MakeSense",
     type: "website",
+    locale: "en_US",
+    url: SITE_URL,
+    title: "Free Business & Personal Finance Calculators | MakeSense",
+    description:
+      "Free calculators for business and everyday money: startup runway, revenue projection, profitability, LTV:CAC, break-even, salary, savings goals and more, with formulas explained.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Free Business & Personal Finance Calculators | MakeSense",
+    description:
+      "Free calculators for business and everyday money, formulas explained and run entirely on your device.",
+    creator: "@arunneupane",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   verification: {
     google: "y_iQncnrIS7Nycs-SFAgvF9aPPyozMkTeJhrDnmS2R0",

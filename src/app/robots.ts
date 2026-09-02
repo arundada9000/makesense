@@ -29,7 +29,15 @@ export default function robots(): MetadataRoute.Robots {
       },
       ...AI_CRAWLERS.map((userAgent) => ({
         userAgent,
-        allow: ["/", "/calculators", "/manual", "/privacy", "/terms"],
+        allow: [
+          "/",
+          "/calculators",
+          "/personal-finance",
+          "/guides",
+          "/manual",
+          "/privacy",
+          "/terms",
+        ],
         disallow: ["/dashboard", "/models", "/compare", "/settings"],
       })),
     ],

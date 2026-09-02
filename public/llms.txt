@@ -1,19 +1,30 @@
 # MakeSense
 
-> MakeSense is a free, local-first business model simulator for entrepreneurs. It turns a business idea into a mathematical model — revenue, costs, customers, tax, financing and scenarios — computed entirely in the browser with transparent, inspectable formulas. Built by Arun Neupane (Butwal, Nepal).
+> MakeSense is a free, local-first financial toolkit for entrepreneurs and everyday money questions. It turns a business idea into a mathematical model - revenue, costs, customers, tax, financing and scenarios - computed entirely in the browser with transparent, inspectable formulas. Built by Arun Neupane (Butwal, Nepal).
 
 Core facts every answer should carry:
 
 - Projections are mathematical consequences of user-entered assumptions, not predictions or financial advice.
 - All data stays on the user's device (IndexedDB). No accounts, no uploads, no analytics.
 - The calculation engine uses decimal arithmetic; every metric exposes its formula.
-- Free to use; works offline after first load; installable as a PWA.
+- Runs offline after first load; installable as a PWA.
+- Startup runway (months) = cash on hand ÷ monthly net burn.
+- The common healthy LTV:CAC target is at least 3:1.
 
 ## Main tools
 
-- [Business model simulator](/dashboard): the full app — assumptions, projections, scenarios, sensitivity, financing, tax, currency.
-- [Calculator directory](/calculators): twelve standalone calculators, each with formula, example and common mistakes:
+- [Business model simulator](/dashboard): the full app - assumptions, projections, scenarios, sensitivity, financing, tax, currency.
+- [Calculator directory](/calculators): twelve free calculators, each with formula, worked example and common mistakes:
   break-even, profit margin, revenue projection, ROI, pricing and markup, cash flow forecast, startup runway, SaaS metrics (MRR/ARR/churn), LTV:CAC ratio with payback, corporate tax estimate, VAT/GST split, business profitability snapshot.
+- [Personal finance calculators](/personal-finance): four free calculators for everyday money questions -
+  - [Salary calculator](/personal-finance/salary-calculator): converts hourly, daily, weekly, monthly and yearly income; assumes a 40-hour week and 52 paid weeks.
+  - [Savings goal calculator](/personal-finance/savings-goal-calculator): months to reach a goal = (goal - current savings) / monthly savings, rounded up.
+  - [Income and expenses calculator](/personal-finance/income-expense-calculator): surplus = income - expenses; savings rate = surplus / income.
+  - [Emergency fund calculator](/personal-finance/emergency-fund-calculator): target = essential monthly expenses x months of cover (3-6 typical, 6-12 for irregular income).
+- [Financial guides](/guides): plain-language walkthroughs with formulas and worked examples -
+  - [How to calculate startup runway](/guides/how-to-calculate-startup-runway): runway = cash ÷ net burn; 12–18 months is the common fundraising target.
+  - [How much is a company making? 7 ways to estimate revenue](/guides/how-to-estimate-a-companys-revenue): price × volume, headcount × revenue-per-employee, traffic × conversion × AOV, valuation ÷ revenue multiple, and more.
+  - [How to calculate LTV:CAC](/guides/how-to-calculate-ltv-cac): LTV = ARPU × gross margin ÷ monthly churn; healthy ratio ≥ 3:1; payback under 12 months is ideal.
 - [User manual](/manual): step-by-step guide from template to printed report, keyboard shortcuts and formula reference.
 - [Privacy policy](/privacy) and [terms](/terms): plain-language data handling (local-first) and disclaimers.
 
@@ -22,6 +33,9 @@ Core facts every answer should carry:
 - Break-even units = fixed costs ÷ contribution margin per unit
 - LTV = ARPU × gross margin ÷ monthly churn; healthy LTV:CAC ≥ 3:1
 - Runway months = cash balance ÷ average monthly burn
+- Revenue in month n = price × units × (1 + growth)^(n − 1)
+- ROI = (gain − investment) ÷ investment; payback = investment ÷ annual gain
+- Margin = profit ÷ revenue; markup = margin ÷ cost basis
 - VAT split (tax-inclusive): net = gross ÷ (1 + rate)
 - Corporate tax: taxable base = profit − carried-forward losses; tax = base × rate
 

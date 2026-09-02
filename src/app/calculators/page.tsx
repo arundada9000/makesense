@@ -6,26 +6,67 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { CALCULATOR_DIRECTORY } from "@/lib/calculator-directory";
 
 export const metadata: Metadata = {
-  title: "All Calculators",
+  title: "Free Business Calculators - Startup, Profit & Finance Tools",
   description:
-    "Twelve free business calculators: break-even, profit margin, revenue, ROI, pricing, cash flow, runway, SaaS metrics, LTV:CAC, corporate tax and VAT, each with formulas explained.",
+    "Twelve free business calculators: break-even, profit margin, revenue, ROI, pricing, cash flow, startup runway, SaaS metrics, LTV:CAC, corporate tax and VAT, each with formulas explained.",
   alternates: { canonical: "/calculators" },
 };
+
+const SITE_URL = "https://makesensebusiness.vercel.app";
+
+function ItemListSchema() {
+  const data = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Calculators",
+            item: `${SITE_URL}/calculators`,
+          },
+        ],
+      },
+      {
+        "@type": "ItemList",
+        name: "Free business calculators",
+        itemListElement: CALCULATOR_DIRECTORY.map((calc, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: calc.name,
+          url: `${SITE_URL}${calc.slug}`,
+        })),
+      },
+    ],
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(data).replace(/</g, "\\u003c"),
+      }}
+    />
+  );
+}
 
 export default function CalculatorsPage() {
   return (
     <div className="flex min-h-dvh flex-col">
+      <ItemListSchema />
       <SiteHeader />
       <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-4 py-12 md:px-6">
         <header className="max-w-2xl animate-rise">
           <p className="text-xs font-semibold uppercase tracking-widest text-accent">
-            Calculator directory
+            Free calculator directory
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
-            Twelve questions, twelve honest answers
+            Twelve free business calculators, formulas explained
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            Each calculator solves one real question with the exact formula
+            Each free calculator solves one real question with the exact formula
             shown, worked examples, and the mistakes people commonly make. When
             one question is not enough, the{" "}
             <Link href="/models?new=1" className="font-medium text-accent hover:underline">
