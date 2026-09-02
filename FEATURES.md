@@ -91,4 +91,9 @@ Short descriptions of every user-facing feature. Grouped by area.
 
 - Marketing landing page explaining the product with Start Modeling and Try Example entry points.
 - Calculator landing pages: standalone educational calculators for break-even, ROI, profit, pricing, cash flow, runway, SaaS metrics, LTV:CAC, and VAT with unique SEO metadata.
-- Sitemap, robots, Open Graph images, and structured data.
+- Personal finance calculators: salary conversion, savings goal, income vs expenses, and emergency fund, each with a live widget, formula, worked example, and FAQ.
+- Guides: plain-language articles with worked examples for startup runway, revenue estimation, and LTV:CAC.
+- Calculator hub: the homepage splits tools into "For your money" and "For your business" sections.
+- Mobile navigation menu matching the marketing site header on small screens.
+- PWA install button in the footer with iOS "Add to Home Screen" instructions.
+- Sitemap, robots, Open Graph images, structured data, and llms.txt for SEO/AEO/GEO.

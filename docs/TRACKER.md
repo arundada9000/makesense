@@ -2,7 +2,7 @@
 
 Updated after each verified feature. Mark status: Done, In Progress, Blocked, Not Started.
 
-Last updated: 2026-08-22
+Last updated: 2026-09-02
 
 ---
 
@@ -142,4 +142,28 @@ Last updated: 2026-08-22
 | Interactive product showcase | Done | ShowcasePreview multi-tab interactive workspace preview |
 | Landing page motion and micro-interactions | Done | LiveSimulator sandbox, ScrollReveal stagger, zero lag |
 | Final verification and build test | Done | Typecheck, 74 domain tests, and next build verified green |
+
+## Phase 10: AEO/SEO/GEO Expansion & Personal Finance
+
+Shipped across the 2026-08/09 milestone. All items verified with typecheck,
+the 74-test domain suite, and a clean production build.
+
+| Item | Status | Notes |
+|---|---|---|
+| CalculatorShell rich schema | Done | WebApplication, FAQPage, HowTo, DefinedTermSet, BreadcrumbList per page |
+| Deep content on top calculators | Done | formula, worked example, what-affects, mistakes, FAQ on runway, revenue, business, LTV:CAC, break-even |
+| Guides section | Done | guide-shell with Article/HowTo/FAQ schema; runway, revenue estimation, LTV:CAC guides |
+| Homepage AEO metadata | Done | full OG/Twitter/robots/verification block in root layout |
+| ItemList schema | Done | /calculators and /personal-finance directories |
+| Personal finance layer | Done | salary, savings-goal, income-expense, emergency-fund widgets + landing pages |
+| Shell section prop | Done | CalculatorShell accepts section { name, href } so money pages breadcrumb into Personal finance |
+| Header nav restructure | Done | 3-item nav (Calculators, Personal finance, Guides) + mobile menu |
+| Footer restructure | Done | Personal finance column + PWA install button section |
+| Homepage money/business hub | Done | "For your money" vs "For your business" two-card directory |
+| PWA install button | Done | beforeinstallprompt + appinstalled + iOS Add-to-Home-Screen hint |
+| PWA shortcuts and manifest | Done | savings-goal shortcut added; manifest name/description widened |
+| Service worker bump | Done | cache bumped to makesense-v2 on content reindex |
+| Sitemap + robots + llms.txt | Done | /personal-finance indexed; AI-crawler allow rules extended |
+| Copy normalization | Done | no em or en dashes remain in user-facing copy |
+| Professional repo docs | Done | README/FEATURES/CHANGELOG/TRACKER updated; CONTRIBUTING, SECURITY, CODE_OF_CONDUCT, .editorconfig, .env.example added |
 
