@@ -2,10 +2,10 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "MakeSense Business Model Simulator",
+    name: "MakeSense - Money & Business Calculators",
     short_name: "MakeSense",
     description:
-      "Model revenue, costs, cash flow, tax and financing for your business. Runs entirely on your device.",
+      "Free business and personal finance calculators that run entirely on your device: revenue, runway, salary, savings and more.",
     start_url: "/dashboard",
     scope: "/",
     display: "standalone",
@@ -59,6 +59,13 @@ export default function manifest(): MetadataRoute.Manifest {
         short_name: "Break-even",
         description: "Units and revenue needed to cover all costs.",
         url: "/break-even-calculator",
+        icons: [{ src: "/icons/shortcut-calculator.png", sizes: "96x96" }],
+      },
+      {
+        name: "Savings goal calculator",
+        short_name: "Savings goal",
+        description: "How long until you can afford what you want.",
+        url: "/personal-finance/savings-goal-calculator",
         icons: [{ src: "/icons/shortcut-calculator.png", sizes: "96x96" }],
       },
     ],

@@ -1,5 +1,5 @@
 /* MakeSense service worker: offline shell via runtime caching. */
-const CACHE = "makesense-v1";
+const CACHE = "makesense-v2";
 const APP_SHELL = ["/", "/dashboard", "/manifest.webmanifest", "/icon.svg"];
 
 self.addEventListener("install", (event) => {
