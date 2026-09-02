@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LineChart, Menu, Sparkles, X } from "lucide-react";
+import { LineChart, Menu, Settings, Sparkles, X } from "lucide-react";
 import { CALCULATOR_DIRECTORY } from "@/lib/calculator-directory";
 import { PERSONAL_FINANCE_DIRECTORY } from "@/lib/personal-finance-directory";
 
@@ -101,6 +101,13 @@ export function SiteHeader() {
             {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
           <Link
+            href="/settings"
+            aria-label="Open settings"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-[var(--radius-base)] text-muted-foreground transition-colors hover:bg-surface-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          >
+            <Settings className="h-[18px] w-[18px]" />
+          </Link>
+          <Link
             href="/dashboard"
             className="group inline-flex h-9 items-center gap-1.5 rounded-[var(--radius-base)] bg-accent px-4 text-xs font-semibold text-accent-foreground shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-hover active:translate-y-0"
           >
@@ -141,6 +148,15 @@ export function SiteHeader() {
                 className="block rounded-[var(--radius-base)] px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-surface-secondary/70 hover:text-foreground"
               >
                 Manual
+              </Link>
+            </li>
+            <li key="settings">
+              <Link
+                href="/settings"
+                onClick={closeMenu}
+                className="block rounded-[var(--radius-base)] px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-surface-secondary/70 hover:text-foreground"
+              >
+                Settings
               </Link>
             </li>
           </ul>

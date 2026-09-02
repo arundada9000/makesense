@@ -76,7 +76,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         id="main-content"
         className="flex-1 pb-24 md:pb-10 md:pl-60 lg:pr-8"
       >
-        <div className="mx-auto w-full max-w-6xl px-4 pt-4 md:px-6 md:pt-6">
+        <div className="mx-auto w-full max-w-6xl px-4 pt-[var(--page-py)] md:px-6 md:pt-[var(--page-py)]">
           {children}
         </div>
       </main>

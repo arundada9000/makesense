@@ -39,5 +39,10 @@ export function CardBody({
   className = "",
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={`px-4 py-4 md:px-5 ${className}`} {...props} />;
+  return (
+    <div
+      className={`px-4 py-[var(--card-gap)] md:px-5 ${className}`}
+      {...props}
+    />
+  );
 }

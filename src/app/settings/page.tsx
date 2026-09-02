@@ -10,6 +10,53 @@ import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Select } from "@/components/ui/select";
 
+const CONTEXT_MENU_SIMPLE: ReadonlyArray<{ id: string; label: string }> = [
+  { id: "back", label: "Back" },
+  { id: "forward", label: "Forward" },
+  { id: "top", label: "Scroll to top" },
+  { id: "copyLink", label: "Copy page link" },
+  { id: "print", label: "Print page" },
+];
+
+const CONTEXT_MENU_GROUPS: ReadonlyArray<{
+  id: string;
+  label: string;
+  items: string[];
+}> = [
+  {
+    id: "open",
+    label: "Open",
+    items: ["Dashboard", "Goals", "New model", "User manual", "Settings"],
+  },
+];
+
+function ContextToggle({
+  id,
+  label,
+  checked,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  checked: boolean;
+  onChange: () => void;
+}) {
+  return (
+    <li className="flex items-center justify-between gap-3 rounded-[var(--radius-base)] px-1 py-1">
+      <label htmlFor={`ctx-${id}`} className="text-xs text-foreground">
+        {label}
+      </label>
+      <input
+        id={`ctx-${id}`}
+        type="checkbox"
+        checked={checked}
+        onChange={onChange}
+        className="h-4 w-4 accent-[var(--accent)]"
+      />
+    </li>
+  );
+}
+
 export default function SettingsPage() {
   const prefs = usePreferences();
   const models = useModelStore((s) => s.models);
@@ -192,6 +239,87 @@ export default function SettingsPage() {
               ))}
             </Select>
           </Field>
+        </CardBody>
+      </Card>
+
+      <Card>
+        <CardHeader title="Cursor and menu" subtitle="Pointer style and right-click menu" />
+        <CardBody className="grid gap-4 sm:grid-cols-2">
+          <Field label="Cursor style" htmlFor="set-cursor">
+            <Select
+              id="set-cursor"
+              value={prefs.cursorStyle}
+              onChange={(e) =>
+                prefs.setCursorStyle(e.target.value as typeof prefs.cursorStyle)
+              }
+            >
+              <option value="custom">Custom (accent dot and ring)</option>
+              <option value="default">Browser default</option>
+            </Select>
+          </Field>
+          <label className="flex items-center justify-between gap-3 rounded-[var(--radius-base)] border border-border bg-surface-secondary px-3 py-2.5 sm:col-span-2">
+            <span className="text-sm">Show custom right-click menu</span>
+            <input
+              type="checkbox"
+              checked={prefs.contextMenu.enabled}
+              onChange={(e) => prefs.setContextMenu({ enabled: e.target.checked })}
+              className="h-4 w-4 accent-[var(--accent)]"
+            />
+          </label>
+        </CardBody>
+      </Card>
+
+      <Card>
+        <CardHeader
+          title="Context menu items"
+          subtitle="Choose which entries appear in the right-click menu"
+        />
+        <CardBody>
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted">
+            Top level
+          </p>
+          <ul className="space-y-1">
+            {CONTEXT_MENU_SIMPLE.map((item) => (
+              <ContextToggle
+                key={item.id}
+                id={item.id}
+                label={item.label}
+                checked={!prefs.contextMenu.disabledItems.includes(item.id)}
+                onChange={() => prefs.toggleContextMenuItem(item.id)}
+              />
+            ))}
+          </ul>
+          {CONTEXT_MENU_GROUPS.length > 0 ? (
+            <>
+              <p className="mb-2 mt-5 text-[11px] font-semibold uppercase tracking-wider text-muted">
+                Submenus
+              </p>
+              <ul className="space-y-1">
+                {CONTEXT_MENU_GROUPS.map((group) => (
+                  <li
+                    key={group.id}
+                    className="rounded-[var(--radius-base)] border border-border bg-surface-secondary px-3 py-2"
+                  >
+                    <p className="pb-1 text-xs font-medium">{group.label}</p>
+                    <ul className="space-y-1">
+                      {group.items.map((label) => {
+                        const id = `${group.id}:${label}`;
+                        return (
+                          <ContextToggle
+                            key={id}
+                            id={id}
+                            label={label}
+                            checked={!prefs.contextMenu.disabledItems.includes(id)}
+                            onChange={() => prefs.toggleContextMenuItem(id)}
+                          />
+                        );
+                      })}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : null}
         </CardBody>
       </Card>
 

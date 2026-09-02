@@ -349,13 +349,22 @@ a[href] {
 /* Density control tightens vertical rhythm without shrinking type. */
 [data-density="compact"] {
   --section-gap: 1rem;
+  --card-gap: 0.75rem;
+  --field-gap: 0.5rem;
+  --page-py: 0.75rem;
 }
 [data-density="comfortable"],
 :root {
   --section-gap: 1.5rem;
+  --card-gap: 1rem;
+  --field-gap: 0.75rem;
+  --page-py: 1rem;
 }
 [data-density="spacious"] {
   --section-gap: 2.25rem;
+  --card-gap: 1.5rem;
+  --field-gap: 1rem;
+  --page-py: 1.25rem;
 }
 
 /* Reduced motion at the OS level or through settings. */

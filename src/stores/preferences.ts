@@ -26,6 +26,18 @@ export const THEMES: ReadonlyArray<{ id: ThemeId; label: string; mode: "light" |
 
 export type Density = "compact" | "comfortable" | "spacious";
 
+export type CursorStyle = "custom" | "default";
+
+export interface ContextMenuConfig {
+  enabled: boolean;
+  disabledItems: string[];
+}
+
+const DEFAULT_CONTEXT_MENU_CONFIG: ContextMenuConfig = {
+  enabled: true,
+  disabledItems: [],
+};
+
 interface PreferencesState {
   themeMode: ThemeMode;
   lightTheme: ThemeId;
@@ -45,6 +57,8 @@ interface PreferencesState {
   hapticsEnabled: boolean;
   numberStyle: "exact" | "compact";
   defaultCurrency: string;
+  cursorStyle: CursorStyle;
+  contextMenu: ContextMenuConfig;
 }
 
 interface PreferencesActions {
@@ -60,6 +74,9 @@ interface PreferencesActions {
   setHapticsEnabled: (value: boolean) => void;
   setNumberStyle: (style: "exact" | "compact") => void;
   setDefaultCurrency: (currency: string) => void;
+  setCursorStyle: (style: CursorStyle) => void;
+  setContextMenu: (config: Partial<ContextMenuConfig>) => void;
+  toggleContextMenuItem: (id: string) => void;
   resetPreferences: () => void;
 }
 
@@ -76,6 +93,8 @@ const defaults: PreferencesState = {
   hapticsEnabled: true,
   numberStyle: "compact",
   defaultCurrency: "NPR",
+  cursorStyle: "custom",
+  contextMenu: DEFAULT_CONTEXT_MENU_CONFIG,
 };
 
 export const usePreferences = create<PreferencesState & PreferencesActions>()(
@@ -96,6 +115,19 @@ export const usePreferences = create<PreferencesState & PreferencesActions>()(
       setHapticsEnabled: (hapticsEnabled) => set({ hapticsEnabled }),
       setNumberStyle: (numberStyle) => set({ numberStyle }),
       setDefaultCurrency: (defaultCurrency) => set({ defaultCurrency }),
+      setCursorStyle: (cursorStyle) => set({ cursorStyle }),
+      setContextMenu: (partial) =>
+        set((s) => ({
+          contextMenu: { ...s.contextMenu, ...partial },
+        })),
+      toggleContextMenuItem: (id) =>
+        set((s) => {
+          const disabled = s.contextMenu.disabledItems;
+          const next = disabled.includes(id)
+            ? disabled.filter((d) => d !== id)
+            : [...disabled, id];
+          return { contextMenu: { ...s.contextMenu, disabledItems: next } };
+        }),
       resetPreferences: () => set({ ...defaults }),
     }),
     {

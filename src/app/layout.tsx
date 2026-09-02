@@ -6,6 +6,7 @@ import { ServiceWorkerRegistration } from "@/components/service-worker";
 import { FeedbackProvider } from "@/components/feedback";
 import { CustomCursor } from "@/components/custom-cursor";
 import { ContextMenu } from "@/components/context-menu";
+import { ScrollToTop } from "@/components/site/scroll-to-top";
 import "./globals.css";
 
 const geistSans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
@@ -113,6 +114,7 @@ export default function RootLayout({
           </FeedbackProvider>
         </ThemeProvider>
         <ServiceWorkerRegistration />
+        <ScrollToTop />
         <CustomCursor />
         <ContextMenu />
       </body>

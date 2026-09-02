@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
-
-const APP_ROUTES = ["/dashboard", "/models", "/compare", "/settings"];
+import { usePreferences } from "@/stores/preferences";
 
 function subscribe(query: string, callback: () => void) {
   const mq = window.matchMedia(query);
@@ -13,13 +12,15 @@ function subscribe(query: string, callback: () => void) {
 
 /** Coin-and-ring cursor for marketing surfaces. A small accent dot tracks the
  * pointer exactly; a lagging ring expands into a currency badge over
- * interactive targets. Fine pointers only; never on app routes or in text
- * fields, where the native caret is needed. */
+ * interactive targets. Fine pointers only; never on app routes, in text
+ * fields, or when the user has chosen the browser default cursor. */
 export function CustomCursor() {
   const pathname = usePathname();
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
+
+  const cursorStyle = usePreferences((s) => s.cursorStyle);
 
   const finePointer = useSyncExternalStore(
     (cb) => subscribe("(pointer: fine)", cb),
@@ -32,8 +33,9 @@ export function CustomCursor() {
     () => true
   );
 
+  const APP_ROUTES = ["/dashboard", "/models", "/compare", "/settings", "/goals"];
   const isAppRoute = APP_ROUTES.some((r) => pathname.startsWith(r));
-  const isEnabled = finePointer && motionAllowed && !isAppRoute;
+  const isEnabled = finePointer && motionAllowed && !isAppRoute && cursorStyle === "custom";
 
   useEffect(() => {
     if (!isEnabled) {
@@ -90,7 +92,7 @@ export function CustomCursor() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-[90] hidden lg:block"
+      className="pointer-events-none fixed inset-0 z-[110] hidden lg:block"
     >
       <div
         ref={ringRef}
