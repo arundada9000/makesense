@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalcCard, CalcResult, Field, NumberInput, useMoney } from "../calc-kit";
+import { CalcCard, CalcResult, Field, NumberInput, MoneyField, useMoney } from "../calc-kit";
 
 export function ProfitCalculatorWidget() {
   const [revenue, setRevenue] = useState(500000);
@@ -32,15 +32,21 @@ export function ProfitCalculatorWidget() {
         />
       }
     >
-      <Field label="Total revenue" htmlFor="pr-rev">
-        <NumberInput id="pr-rev" value={revenue} onValueChange={setRevenue} />
-      </Field>
-      <Field label="Cost of goods sold" htmlFor="pr-cogs" help="Direct costs of what you sold">
-        <NumberInput id="pr-cogs" value={cogs} onValueChange={setCogs} />
-      </Field>
-      <Field label="Operating expenses" htmlFor="pr-opex" help="Rent, salaries, marketing">
-        <NumberInput id="pr-opex" value={opex} onValueChange={setOpex} />
-      </Field>
+<MoneyField label="Total revenue" htmlFor="pr-rev" value={revenue} onValueChange={setRevenue} />
+      <MoneyField
+        label="Cost of goods sold"
+        htmlFor="pr-cogs"
+        value={cogs}
+        onValueChange={setCogs}
+        help="Direct costs of what you sold"
+      />
+      <MoneyField
+        label="Operating expenses"
+        htmlFor="pr-opex"
+        value={opex}
+        onValueChange={setOpex}
+        help="Rent, salaries, marketing"
+      />
       <Field label="Tax rate" htmlFor="pr-tax" suffix="%">
         <NumberInput id="pr-tax" value={taxRate} onValueChange={setTaxRate} />
       </Field>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalcCard, CalcResult, Field, NumberInput, useMoney } from "../calc-kit";
+import { CalcCard, CalcResult, Field, NumberInput, MoneyField, useMoney } from "../calc-kit";
 
 export function RunwayCalculatorWidget() {
   const [cash, setCash] = useState(1200000);
@@ -40,15 +40,14 @@ export function RunwayCalculatorWidget() {
         />
       }
     >
-      <Field label="Cash on hand" htmlFor="rw-cash">
-        <NumberInput id="rw-cash" value={cash} onValueChange={setCash} />
-      </Field>
-      <Field label="Monthly revenue" htmlFor="rw-rev">
-        <NumberInput id="rw-rev" value={revenue} onValueChange={setRevenue} />
-      </Field>
-      <Field label="Monthly costs" htmlFor="rw-costs">
-        <NumberInput id="rw-costs" value={costs} onValueChange={setCosts} />
-      </Field>
+<MoneyField
+        label="Cash on hand"
+        htmlFor="rw-cash"
+        value={cash}
+        onValueChange={setCash}
+      />
+      <MoneyField label="Monthly revenue" htmlFor="rw-rev" value={revenue} onValueChange={setRevenue} />
+      <MoneyField label="Monthly costs" htmlFor="rw-costs" value={costs} onValueChange={setCosts} />
       <Field label="Monthly revenue growth" htmlFor="rw-growth" suffix="%">
         <NumberInput id="rw-growth" value={growth} allowNegative onValueChange={setGrowth} />
       </Field>

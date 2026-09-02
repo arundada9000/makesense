@@ -13,15 +13,16 @@ import {
   Search,
   Calculator,
   BookOpen,
-  ArrowLeft,
   Home,
 } from "lucide-react";
 import { useModelStore } from "@/stores/model-store";
 import { CommandPalette } from "@/components/command-palette";
 import { KeyboardShortcuts } from "@/components/keyboard-shortcuts";
+import { Target } from "lucide-react";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/goals", label: "Goals", icon: Target },
   { href: "/models", label: "Models", icon: Boxes },
   { href: "/compare", label: "Compare", icon: GitCompareArrows },
   { href: "/calculators", label: "Calculators", icon: Calculator },
@@ -31,7 +32,7 @@ const NAV_ITEMS = [
 
 const MOBILE_ITEMS = [
   { href: "/dashboard", label: "Home", icon: LayoutDashboard },
-  { href: "/models", label: "Models", icon: Boxes },
+  { href: "/goals", label: "Goals", icon: Target },
   { href: "/calculators", label: "Calculators", icon: Calculator },
   { href: "/settings", label: "More", icon: Settings },
 ];
@@ -50,6 +51,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAppRoute =
     pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/goals") ||
     pathname.startsWith("/models") ||
     pathname.startsWith("/compare") ||
     pathname.startsWith("/settings");

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalcCard, CalcResult, Field, NumberInput, useMoney } from "../calc-kit";
+import { CalcCard, CalcResult, Field, NumberInput, MoneyField, useMoney } from "../calc-kit";
 
 export function LtvCacCalculatorWidget() {
   const [arpu, setArpu] = useState(1500);
@@ -42,18 +42,25 @@ export function LtvCacCalculatorWidget() {
         />
       }
     >
-      <Field label="Revenue per customer / month" htmlFor="lc-arpu">
-        <NumberInput id="lc-arpu" value={arpu} onValueChange={setArpu} />
-      </Field>
+<MoneyField
+        label="Revenue per customer / month"
+        htmlFor="lc-arpu"
+        value={arpu}
+        onValueChange={setArpu}
+      />
       <Field label="Gross margin" htmlFor="lc-margin" suffix="%">
         <NumberInput id="lc-margin" value={grossMargin} onValueChange={setGrossMargin} />
       </Field>
       <Field label="Monthly churn" htmlFor="lc-churn" suffix="%">
         <NumberInput id="lc-churn" value={churn} onValueChange={setChurn} />
       </Field>
-      <Field label="CAC" htmlFor="lc-cac" help="Sales plus marketing divided by new customers">
-        <NumberInput id="lc-cac" value={cac} onValueChange={setCac} />
-      </Field>
+      <MoneyField
+        label="CAC"
+        htmlFor="lc-cac"
+        value={cac}
+        onValueChange={setCac}
+        help="Sales plus marketing divided by new customers"
+      />
     </CalcCard>
   );
 }

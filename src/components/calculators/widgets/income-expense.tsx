@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalcCard, CalcResult, Field, NumberInput, useMoney } from "../calc-kit";
+import { CalcCard, CalcResult, MoneyField, useMoney } from "../calc-kit";
 
 export function IncomeExpenseWidget() {
   const [income, setIncome] = useState(60000);
@@ -32,12 +32,13 @@ export function IncomeExpenseWidget() {
         />
       }
     >
-      <Field label="Monthly income" htmlFor="ie-income">
-        <NumberInput id="ie-income" value={income} onValueChange={setIncome} />
-      </Field>
-      <Field label="Monthly expenses" htmlFor="ie-expenses">
-        <NumberInput id="ie-expenses" value={expenses} onValueChange={setExpenses} />
-      </Field>
+      <MoneyField label="Monthly income" htmlFor="ie-income" value={income} onValueChange={setIncome} />
+      <MoneyField
+        label="Monthly expenses"
+        htmlFor="ie-expenses"
+        value={expenses}
+        onValueChange={setExpenses}
+      />
     </CalcCard>
   );
 }

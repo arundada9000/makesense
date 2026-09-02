@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { CalcCard, CalcResult, Field, NumberInput, useMoney } from "../calc-kit";
+import { CalcCard, CalcResult, MoneyField, useMoney } from "../calc-kit";
+import { readShareParams } from "@/lib/share";
 
 export function SavingsGoalWidget() {
-  const [goal, setGoal] = useState(100000);
-  const [current, setCurrent] = useState(10000);
-  const [monthly, setMonthly] = useState(5000);
+  const initial = readShareParams(["goal", "saved", "monthly"]);
+  const [goal, setGoal] = useState(initial.goal ?? 100000);
+  const [current, setCurrent] = useState(initial.saved ?? 10000);
+  const [monthly, setMonthly] = useState(initial.monthly ?? 5000);
   const money = useMoney("Rs.");
 
   const remaining = Math.max(goal - current, 0);
@@ -38,15 +40,19 @@ export function SavingsGoalWidget() {
         />
       }
     >
-      <Field label="Goal amount" htmlFor="sg-goal">
-        <NumberInput id="sg-goal" value={goal} onValueChange={setGoal} />
-      </Field>
-      <Field label="Current savings" htmlFor="sg-current">
-        <NumberInput id="sg-current" value={current} onValueChange={setCurrent} />
-      </Field>
-      <Field label="Monthly savings" htmlFor="sg-monthly">
-        <NumberInput id="sg-monthly" value={monthly} onValueChange={setMonthly} />
-      </Field>
+      <MoneyField label="Goal amount" htmlFor="sg-goal" value={goal} onValueChange={setGoal} />
+      <MoneyField
+        label="Current savings"
+        htmlFor="sg-current"
+        value={current}
+        onValueChange={setCurrent}
+      />
+      <MoneyField
+        label="Monthly savings"
+        htmlFor="sg-monthly"
+        value={monthly}
+        onValueChange={setMonthly}
+      />
     </CalcCard>
   );
 }

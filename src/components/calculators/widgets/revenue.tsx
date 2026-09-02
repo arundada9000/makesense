@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalcCard, CalcResult, Field, NumberInput, useMoney } from "../calc-kit";
+import { CalcCard, CalcResult, Field, NumberInput, MoneyField, useMoney } from "../calc-kit";
 
 export function RevenueCalculatorWidget() {
   const [price, setPrice] = useState(2500);
@@ -39,9 +39,7 @@ export function RevenueCalculatorWidget() {
         />
       }
     >
-      <Field label="Price per unit" htmlFor="rv-price">
-        <NumberInput id="rv-price" value={price} onValueChange={setPrice} />
-      </Field>
+<MoneyField label="Price per unit" htmlFor="rv-price" value={price} onValueChange={setPrice} />
       <Field label="Units in month 1" htmlFor="rv-units">
         <NumberInput id="rv-units" value={units} onValueChange={setUnits} />
       </Field>

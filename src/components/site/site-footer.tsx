@@ -44,6 +44,8 @@ const COLUMNS: { title: string; links: Array<[string, string]> }[] = [
     links: [
       ["Salary calculator", "/personal-finance/salary-calculator"],
       ["Savings goal calculator", "/personal-finance/savings-goal-calculator"],
+      ["Can I afford it", "/personal-finance/can-i-afford-calculator"],
+      ["Year from now", "/personal-finance/year-from-now-calculator"],
       ["Income and expenses", "/personal-finance/income-expense-calculator"],
       ["Emergency fund", "/personal-finance/emergency-fund-calculator"],
     ],
@@ -52,6 +54,11 @@ const COLUMNS: { title: string; links: Array<[string, string]> }[] = [
     title: "Resources",
     links: [
       ["User manual", "/manual"],
+      ["How to build an emergency fund", "/guides/how-to-build-an-emergency-fund"],
+      ["Money dos and don'ts", "/guides/financial-dos-and-donts"],
+      ["Common money mistakes", "/guides/common-money-mistakes"],
+      ["Best finance books", "/guides/best-personal-finance-books"],
+      ["Interest rates and inflation", "/guides/interest-rates-and-inflation"],
       ["Startup runway guide", "/guides/how-to-calculate-startup-runway"],
       ["Estimate a company's revenue", "/guides/how-to-estimate-a-companys-revenue"],
       ["LTV:CAC guide", "/guides/how-to-calculate-ltv-cac"],

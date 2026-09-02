@@ -3,6 +3,7 @@
 import Dexie, { type Table } from "dexie";
 import type { BusinessModel } from "@/domain/model/types";
 import { SCHEMA_VERSION } from "@/domain/model/defaults";
+import type { SavingsGoal } from "@/domain/goals/types";
 
 export interface StoredModel {
   id: string;
@@ -12,13 +13,25 @@ export interface StoredModel {
   model: BusinessModel;
 }
 
+export interface StoredGoal {
+  id: string;
+  name: string;
+  updatedAt: string;
+  goal: SavingsGoal;
+}
+
 class MakeSenseDatabase extends Dexie {
   models!: Table<StoredModel, string>;
+  goals!: Table<StoredGoal, string>;
 
   constructor() {
     super("makesense");
     this.version(1).stores({
       models: "id, name, updatedAt, archived",
+    });
+    this.version(2).stores({
+      models: "id, name, updatedAt, archived",
+      goals: "id, updatedAt",
     });
   }
 }
@@ -51,6 +64,28 @@ export async function deleteModel(id: string): Promise<void> {
 
 export async function clearModels(): Promise<void> {
   await getDb().models.clear();
+}
+
+export async function allGoals(): Promise<StoredGoal[]> {
+  if (typeof window === "undefined") return [];
+  return getDb().goals.orderBy("updatedAt").reverse().toArray();
+}
+
+export async function putGoal(goal: SavingsGoal): Promise<void> {
+  await getDb().goals.put({
+    id: goal.id,
+    name: goal.name,
+    updatedAt: goal.updatedAt,
+    goal,
+  });
+}
+
+export async function deleteGoal(id: string): Promise<void> {
+  await getDb().goals.delete(id);
+}
+
+export async function clearGoals(): Promise<void> {
+  await getDb().goals.clear();
 }
 
 /**

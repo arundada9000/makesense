@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalcCard, CalcResult, Field, NumberInput, useMoney } from "../calc-kit";
+import { CalcCard, CalcResult, Field, NumberInput, MoneyField, useMoney } from "../calc-kit";
 
 export function EmergencyFundWidget() {
   const [expenses, setExpenses] = useState(42000);
@@ -31,18 +31,22 @@ export function EmergencyFundWidget() {
         />
       }
     >
-      <Field label="Monthly expenses" htmlFor="ef-expenses">
-        <NumberInput id="ef-expenses" value={expenses} onValueChange={setExpenses} />
-      </Field>
+      <MoneyField
+        label="Monthly expenses"
+        htmlFor="ef-expenses"
+        value={expenses}
+        onValueChange={setExpenses}
+      />
       <Field label="Months of cover" htmlFor="ef-months">
         <NumberInput id="ef-months" value={months} onValueChange={setMonths} />
       </Field>
-      <Field label="Already saved" htmlFor="ef-saved">
-        <NumberInput id="ef-saved" value={saved} onValueChange={setSaved} />
-      </Field>
-      <Field label="Monthly savings" htmlFor="ef-monthly">
-        <NumberInput id="ef-monthly" value={monthly} onValueChange={setMonthly} />
-      </Field>
+      <MoneyField label="Already saved" htmlFor="ef-saved" value={saved} onValueChange={setSaved} />
+      <MoneyField
+        label="Monthly savings"
+        htmlFor="ef-monthly"
+        value={monthly}
+        onValueChange={setMonthly}
+      />
     </CalcCard>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalcCard, CalcResult, Field, NumberInput, useMoney } from "../calc-kit";
+import { CalcCard, CalcResult, Field, NumberInput, MoneyField, useMoney } from "../calc-kit";
 
 export function VatCalculatorWidget() {
   const [amount, setAmount] = useState(10000);
@@ -36,9 +36,12 @@ export function VatCalculatorWidget() {
         />
       }
     >
-      <Field label={inclusive ? "Price including tax" : "Price excluding tax"} htmlFor="vat-amount">
-        <NumberInput id="vat-amount" value={amount} onValueChange={setAmount} />
-      </Field>
+<MoneyField
+        label={inclusive ? "Price including tax" : "Price excluding tax"}
+        htmlFor="vat-amount"
+        value={amount}
+        onValueChange={setAmount}
+      />
       <Field label="Tax rate" htmlFor="vat-rate" suffix="%">
         <NumberInput id="vat-rate" value={rate} onValueChange={setRate} />
       </Field>

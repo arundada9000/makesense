@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalcCard, CalcResult, Field, NumberInput, useMoney } from "../calc-kit";
+import { CalcCard, CalcResult, Field, NumberInput, MoneyField, useMoney } from "../calc-kit";
 
 export function TaxCalculatorWidget() {
   const [profit, setProfit] = useState(1200000);
@@ -30,15 +30,23 @@ export function TaxCalculatorWidget() {
         />
       }
     >
-      <Field label="Annual profit before tax" htmlFor="tx-profit">
-        <NumberInput id="tx-profit" value={profit} allowNegative onValueChange={setProfit} />
-      </Field>
+<MoneyField
+        label="Annual profit before tax"
+        htmlFor="tx-profit"
+        value={profit}
+        onValueChange={setProfit}
+        allowNegative
+      />
       <Field label="Corporate tax rate" htmlFor="tx-rate" suffix="%">
         <NumberInput id="tx-rate" value={rate} onValueChange={setRate} />
       </Field>
-      <Field label="Loss carried forward" htmlFor="tx-carry" help="Prior year losses allowed against this profit">
-        <NumberInput id="tx-carry" value={carryforward} onValueChange={setCarryforward} />
-      </Field>
+      <MoneyField
+        label="Loss carried forward"
+        htmlFor="tx-carry"
+        value={carryforward}
+        onValueChange={setCarryforward}
+        help="Prior year losses allowed against this profit"
+      />
     </CalcCard>
   );
 }

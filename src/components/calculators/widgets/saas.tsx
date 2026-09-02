@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalcCard, CalcResult, Field, NumberInput, useMoney } from "../calc-kit";
+import { CalcCard, CalcResult, Field, NumberInput, MoneyField, useMoney } from "../calc-kit";
 
 export function SaasCalculatorWidget() {
   const [mrr, setMrr] = useState(500000);
@@ -33,9 +33,13 @@ export function SaasCalculatorWidget() {
         />
       }
     >
-      <Field label="MRR" htmlFor="saas-mrr" help="Monthly recurring revenue">
-        <NumberInput id="saas-mrr" value={mrr} onValueChange={setMrr} />
-      </Field>
+<MoneyField
+        label="MRR"
+        htmlFor="saas-mrr"
+        value={mrr}
+        onValueChange={setMrr}
+        help="Monthly recurring revenue"
+      />
       <Field label="Active subscribers" htmlFor="saas-cust">
         <NumberInput id="saas-cust" value={customers} onValueChange={setCustomers} />
       </Field>

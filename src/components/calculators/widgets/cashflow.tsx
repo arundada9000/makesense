@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalcCard, CalcResult, Field, NumberInput, useMoney } from "../calc-kit";
+import { CalcCard, CalcResult, MoneyField, useMoney } from "../calc-kit";
 
 export function CashFlowCalculatorWidget() {
   const [opening, setOpening] = useState(300000);
@@ -35,15 +35,26 @@ export function CashFlowCalculatorWidget() {
         />
       }
     >
-      <Field label="Cash on hand today" htmlFor="cf-opening">
-        <NumberInput id="cf-opening" value={opening} onValueChange={setOpening} />
-      </Field>
-      <Field label="Cash in per month" htmlFor="cf-in" help="Customer payments received">
-        <NumberInput id="cf-in" value={inflow} onValueChange={setInflow} />
-      </Field>
-      <Field label="Cash out per month" htmlFor="cf-out" help="Suppliers, salaries, rent, loan payments">
-        <NumberInput id="cf-out" value={outflow} onValueChange={setOutflow} />
-      </Field>
+<MoneyField
+        label="Cash on hand today"
+        htmlFor="cf-opening"
+        value={opening}
+        onValueChange={setOpening}
+      />
+      <MoneyField
+        label="Cash in per month"
+        htmlFor="cf-in"
+        value={inflow}
+        onValueChange={setInflow}
+        help="Customer payments received"
+      />
+      <MoneyField
+        label="Cash out per month"
+        htmlFor="cf-out"
+        value={outflow}
+        onValueChange={setOutflow}
+        help="Suppliers, salaries, rent, loan payments"
+      />
     </CalcCard>
   );
 }

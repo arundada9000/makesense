@@ -20,6 +20,18 @@ export const PERSONAL_FINANCE_DIRECTORY: PersonalFinanceEntry[] = [
     question: "When can I afford what I want?",
   },
   {
+    slug: "/personal-finance/can-i-afford-calculator",
+    name: "Can I afford it",
+    tagline: "How long until you can buy the thing",
+    question: "Can I afford it and how long will it take?",
+  },
+  {
+    slug: "/personal-finance/year-from-now-calculator",
+    name: "Year from now",
+    tagline: "Your savings 12, 24 and 36 months ahead",
+    question: "Where will my money be a year from now?",
+  },
+  {
     slug: "/personal-finance/income-expense-calculator",
     name: "Income vs expenses",
     tagline: "Surplus, deficit and savings rate each month",

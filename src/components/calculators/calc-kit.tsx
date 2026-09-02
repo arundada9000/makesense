@@ -65,6 +65,77 @@ export function useMoney(symbol: string) {
     })}`;
 }
 
+/**
+ * Compact rendering of large money values (1000 -> "Rs. 1k", 2500000 ->
+ * "Rs. 2.5M") so inputs stay readable. Returns null when the number is too
+ * small to need shortening.
+ */
+export function compactMoney(symbol: string, value: number): string | null {
+  if (!Number.isFinite(value) || Math.abs(value) < 1000) return null;
+  const units = [
+    { div: 1e9, suffix: "B" },
+    { div: 1e6, suffix: "M" },
+    { div: 1e3, suffix: "k" },
+  ];
+  for (const { div, suffix } of units) {
+    if (Math.abs(value) >= div) {
+      const scaled = value / div;
+      const abs = Math.abs(scaled);
+      const decimals = abs < 10 ? 1 : abs < 100 ? 1 : 0;
+      const text = scaled
+        .toFixed(decimals)
+        .replace(/\.0$/, "");
+      return `${symbol} ${text}${suffix}`;
+    }
+  }
+  return null;
+}
+
+/**
+ * Money input with a compact read-under hint ("= Rs. 25k") so long zero
+ * strings are easy to parse at a glance.
+ */
+export function MoneyField({
+  label,
+  htmlFor,
+  value,
+  onValueChange,
+  symbol = "Rs.",
+  help,
+  allowNegative = false,
+}: {
+  label: string;
+  htmlFor: string;
+  value: number;
+  onValueChange: (value: number) => void;
+  symbol?: string;
+  help?: React.ReactNode;
+  allowNegative?: boolean;
+}) {
+  const compact = compactMoney(symbol, value);
+  return (
+    <Field
+      label={label}
+      htmlFor={htmlFor}
+      help={
+        !help && !compact ? undefined : (
+          <>
+            {help ? <span className="block">{help}</span> : null}
+            {compact ? <span className={`${help ? "block" : ""} text-muted-foreground`}> = {compact}</span> : null}
+          </>
+        )
+      }
+    >
+      <NumberInput
+        id={htmlFor}
+        value={value}
+        onValueChange={onValueChange}
+        allowNegative={allowNegative}
+      />
+    </Field>
+  );
+}
+
 export function useCalcState<T extends Record<string, number>>(initial: T) {
   const [values, setValues] = useState<T>(initial);
   const setters = useMemo(() => {

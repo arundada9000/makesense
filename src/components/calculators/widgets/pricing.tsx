@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalcCard, CalcResult, Field, NumberInput, useMoney } from "../calc-kit";
+import { CalcCard, CalcResult, Field, NumberInput, MoneyField, useMoney } from "../calc-kit";
 
 export function PricingCalculatorWidget() {
   const [unitCost, setUnitCost] = useState(900);
@@ -32,15 +32,23 @@ export function PricingCalculatorWidget() {
         />
       }
     >
-      <Field label="Unit cost" htmlFor="pc-cost" help="Everything that scales with one sale">
-        <NumberInput id="pc-cost" value={unitCost} onValueChange={setUnitCost} />
-      </Field>
+<MoneyField
+        label="Unit cost"
+        htmlFor="pc-cost"
+        value={unitCost}
+        onValueChange={setUnitCost}
+        help="Everything that scales with one sale"
+      />
       <Field label="Target gross margin" htmlFor="pc-margin" suffix="%">
         <NumberInput id="pc-margin" value={targetMargin} onValueChange={(v) => setTargetMargin(Math.min(99, v))} />
       </Field>
-      <Field label="Competitor price" htmlFor="pc-comp" help="Optional reference point">
-        <NumberInput id="pc-comp" value={competitorPrice} onValueChange={setCompetitorPrice} />
-      </Field>
+      <MoneyField
+        label="Competitor price"
+        htmlFor="pc-comp"
+        value={competitorPrice}
+        onValueChange={setCompetitorPrice}
+        help="Optional reference point"
+      />
     </CalcCard>
   );
 }

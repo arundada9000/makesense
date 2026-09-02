@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalcCard, CalcResult, Field, NumberInput, useMoney } from "../calc-kit";
+import { CalcCard, CalcResult, Field, NumberInput, MoneyField, useMoney } from "../calc-kit";
 
 export function RoiCalculatorWidget() {
   const [investment, setInvestment] = useState(500000);
@@ -39,12 +39,20 @@ export function RoiCalculatorWidget() {
         />
       }
     >
-      <Field label="Initial investment" htmlFor="roi-inv">
-        <NumberInput id="roi-inv" value={investment} onValueChange={setInvestment} />
-      </Field>
-      <Field label="Net gain per year" htmlFor="roi-gain" help="Profit attributable to the investment">
-        <NumberInput id="roi-gain" value={annualGain} allowNegative onValueChange={setAnnualGain} />
-      </Field>
+<MoneyField
+        label="Initial investment"
+        htmlFor="roi-inv"
+        value={investment}
+        onValueChange={setInvestment}
+      />
+      <MoneyField
+        label="Net gain per year"
+        htmlFor="roi-gain"
+        value={annualGain}
+        onValueChange={setAnnualGain}
+        allowNegative
+        help="Profit attributable to the investment"
+      />
       <Field label="Horizon years" htmlFor="roi-years">
         <NumberInput id="roi-years" value={years} onValueChange={(v) => setYears(Math.max(1, Math.round(v)))} />
       </Field>

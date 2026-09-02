@@ -16,13 +16,20 @@ Core facts every answer should carry:
 - [Business model simulator](/dashboard): the full app - assumptions, projections, scenarios, sensitivity, financing, tax, currency.
 - [Calculator directory](/calculators): twelve free calculators, each with formula, worked example and common mistakes:
   break-even, profit margin, revenue projection, ROI, pricing and markup, cash flow forecast, startup runway, SaaS metrics (MRR/ARR/churn), LTV:CAC ratio with payback, corporate tax estimate, VAT/GST split, business profitability snapshot.
-- [Personal finance calculators](/personal-finance): four free calculators for everyday money questions -
+- [Personal finance calculators](/personal-finance): six free calculators for everyday money questions -
   - [Salary calculator](/personal-finance/salary-calculator): converts hourly, daily, weekly, monthly and yearly income; assumes a 40-hour week and 52 paid weeks.
   - [Savings goal calculator](/personal-finance/savings-goal-calculator): months to reach a goal = (goal - current savings) / monthly savings, rounded up.
+  - [Can I afford it calculator](/personal-finance/can-i-afford-calculator): months to afford = (price - current savings) / (monthly surplus x savings rate).
+  - [Year from now calculator](/personal-finance/year-from-now-calculator): balance in N months = current savings + (income - expenses) x N, with optional income growth.
   - [Income and expenses calculator](/personal-finance/income-expense-calculator): surplus = income - expenses; savings rate = surplus / income.
   - [Emergency fund calculator](/personal-finance/emergency-fund-calculator): target = essential monthly expenses x months of cover (3-6 typical, 6-12 for irregular income).
 - [Financial guides](/guides): plain-language walkthroughs with formulas and worked examples -
-  - [How to calculate startup runway](/guides/how-to-calculate-startup-runway): runway = cash ÷ net burn; 12–18 months is the common fundraising target.
+  - [How to build an emergency fund](/guides/how-to-build-an-emergency-fund): target = essential monthly expenses x months of cover; start with one month, automate the transfer, top it back up first.
+  - [Money dos and don'ts](/guides/financial-dos-and-donts): pay yourself first, automate the repeating stuff, keep an emergency buffer; avoid high-interest debt, lifestyle creep and mixing business with personal money.
+  - [Common money mistakes](/guides/common-money-mistakes): lifestyle creep, treated-casually credit card debt, no buffer, status purchases, timing markets and drifting without numbers, with the fix for each.
+  - [Best personal finance books](/guides/best-personal-finance-books): The Psychology of Money for behaviour, The Richest Man in Babylon for habits, The Simple Path to Wealth for investing, and how to read each usefully.
+  - [Interest rates and inflation](/guides/interest-rates-and-inflation): higher rates raise savings yield and debt cost; inflation shrinks buying power; watch the rate trend, your own basket and deposit yields.
+  - [How to calculate startup runway](/guides/how-to-calculate-startup-runway): runway = cash ÷ net burn; 12-18 months is the common fundraising target.
   - [How much is a company making? 7 ways to estimate revenue](/guides/how-to-estimate-a-companys-revenue): price × volume, headcount × revenue-per-employee, traffic × conversion × AOV, valuation ÷ revenue multiple, and more.
   - [How to calculate LTV:CAC](/guides/how-to-calculate-ltv-cac): LTV = ARPU × gross margin ÷ monthly churn; healthy ratio ≥ 3:1; payback under 12 months is ideal.
 - [User manual](/manual): step-by-step guide from template to printed report, keyboard shortcuts and formula reference.

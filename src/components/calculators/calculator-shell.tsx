@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
 
 export interface FaqItem {
   q: string;
@@ -180,7 +181,14 @@ export function CalculatorShell({
       <SiteHeader />
 
       <main id="main-content" className="mx-auto w-full max-w-4xl px-4 pb-16 md:px-6">
-        <section className="pt-8 md:pt-12">
+        <Breadcrumbs
+          items={[
+            { name: "Home", href: "/" },
+            { name: section.name, href: section.href },
+            { name: title },
+          ]}
+        />
+        <section className="pt-4 md:pt-6">
           <p className="text-xs font-semibold uppercase tracking-widest text-accent">
             Free calculator
           </p>

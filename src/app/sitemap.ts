@@ -24,6 +24,11 @@ const CALCULATORS = [
 ];
 
 const GUIDES = [
+  "how-to-build-an-emergency-fund",
+  "financial-dos-and-donts",
+  "common-money-mistakes",
+  "best-personal-finance-books",
+  "interest-rates-and-inflation",
   "how-to-calculate-startup-runway",
   "how-to-estimate-a-companys-revenue",
   "how-to-calculate-ltv-cac",
@@ -32,6 +37,8 @@ const GUIDES = [
 const PERSONAL_FINANCE = [
   "salary-calculator",
   "savings-goal-calculator",
+  "can-i-afford-calculator",
+  "year-from-now-calculator",
   "income-expense-calculator",
   "emergency-fund-calculator",
 ];

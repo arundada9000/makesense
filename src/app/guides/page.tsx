@@ -5,13 +5,38 @@ import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 
 export const metadata: Metadata = {
-  title: "Startup Financial Guides - Formulas & Walkthroughs",
+  title: "Financial Guides - Formulas & Walkthroughs",
   description:
-    "Plain-language guides to startup runway, revenue estimation and LTV:CAC. Each guide explains the formula, walks through a worked example and links to a free calculator.",
+    "Plain-language guides to emergency funds, saving goals, common money mistakes and startup finances, plus runway, revenue estimation and LTV:CAC. Each explains the formula and links to a free calculator.",
   alternates: { canonical: "/guides" },
 };
 
 const GUIDES = [
+  {
+    href: "/guides/how-to-build-an-emergency-fund",
+    title: "How to build an emergency fund",
+    desc: "How big the fund should be, the months formula, and the step order that makes the habit stick.",
+  },
+  {
+    href: "/guides/financial-dos-and-donts",
+    title: "Money dos and don'ts",
+    desc: "The habits that actually move the needle: what to automate, what to avoid, and the rules of thumb in between.",
+  },
+  {
+    href: "/guides/common-money-mistakes",
+    title: "Common money mistakes",
+    desc: "The financial downfalls that sneak up on you, from lifestyle creep to timing markets, with the fix for each.",
+  },
+  {
+    href: "/guides/best-personal-finance-books",
+    title: "Best personal finance books",
+    desc: "The one idea each well-known book teaches, and which book to pick for the problem you have right now.",
+  },
+  {
+    href: "/guides/interest-rates-and-inflation",
+    title: "Interest rates and inflation",
+    desc: "How the market moves your money: savings yield, debt cost, buying power, and the three signals worth reading.",
+  },
   {
     href: "/guides/how-to-calculate-startup-runway",
     title: "How to calculate startup runway",
@@ -47,7 +72,7 @@ function CollectionSchema() {
       },
       {
         "@type": "CollectionPage",
-        name: "Startup financial guides",
+        name: "Financial guides",
         hasPart: GUIDES.map((g) => ({
           "@type": "Article",
           headline: g.title,
@@ -75,12 +100,13 @@ export default function GuidesPage() {
             Guides & walkthroughs
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
-            Understand the math behind your startup
+            Understand the math behind your money
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
             Each guide explains one financial concept in plain language, walks
             through the numbers by hand, then hands you a free calculator to run
-            your own figures. No spreadsheets, no accounts, runs in your browser.
+            your own figures. From your first emergency fund to your company&apos;s
+            runway, no spreadsheets and no accounts.
           </p>
         </header>
 
@@ -106,8 +132,9 @@ export default function GuidesPage() {
         <section className="animate-rise mt-12 rounded-[var(--radius-lg)] border border-border bg-surface-secondary p-6 md:p-8">
           <h2 className="text-lg font-semibold tracking-tight">Skip the reading, run the numbers</h2>
           <p className="mt-1.5 max-w-xl text-xs leading-relaxed text-muted-foreground">
-            Every guide ends in a free calculator. Browse all twelve tools or
-            open the full business model simulator that connects them.
+Every guide ends in a free calculator. Browse all eighteen
+                tools or open the full business model simulator that connects
+                them.
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             <Link

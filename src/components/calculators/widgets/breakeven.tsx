@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalcCard, CalcResult, Field, NumberInput, useMoney } from "../calc-kit";
+import { CalcCard, CalcResult, Field, NumberInput, MoneyField, useMoney } from "../calc-kit";
 
 export function BreakEvenCalculatorWidget() {
   const [fixed, setFixed] = useState(150000);
@@ -52,15 +52,19 @@ export function BreakEvenCalculatorWidget() {
         />
       }
     >
-      <Field label="Fixed costs per month" htmlFor="be-fixed">
-        <NumberInput id="be-fixed" value={fixed} onValueChange={setFixed} />
-      </Field>
-      <Field label="Price per unit" htmlFor="be-price">
-        <NumberInput id="be-price" value={price} onValueChange={setPrice} />
-      </Field>
-      <Field label="Variable cost per unit" htmlFor="be-variable">
-        <NumberInput id="be-variable" value={variable} onValueChange={setVariable} />
-      </Field>
+<MoneyField
+        label="Fixed costs per month"
+        htmlFor="be-fixed"
+        value={fixed}
+        onValueChange={setFixed}
+      />
+      <MoneyField label="Price per unit" htmlFor="be-price" value={price} onValueChange={setPrice} />
+      <MoneyField
+        label="Variable cost per unit"
+        htmlFor="be-variable"
+        value={variable}
+        onValueChange={setVariable}
+      />
       <Field label="Units you sell now" htmlFor="be-current">
         <NumberInput id="be-current" value={currentUnits} onValueChange={setCurrentUnits} />
       </Field>

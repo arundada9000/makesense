@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalcCard, CalcResult, Field, NumberInput, useMoney } from "../calc-kit";
+import { CalcCard, CalcResult, Field, MoneyField, useMoney } from "../calc-kit";
 import { Select } from "@/components/ui/select";
 
 type PayPeriod = "hourly" | "daily" | "weekly" | "monthly" | "yearly";
@@ -50,9 +50,12 @@ export function SalaryCalculatorWidget() {
         />
       }
     >
-      <Field label={`Amount per ${PERIOD_LABEL[period]}`} htmlFor="sal-amount">
-        <NumberInput id="sal-amount" value={amount} onValueChange={setAmount} />
-      </Field>
+      <MoneyField
+        label={`Amount per ${PERIOD_LABEL[period]}`}
+        htmlFor="sal-amount"
+        value={amount}
+        onValueChange={setAmount}
+      />
       <Field label="Pay period" htmlFor="sal-period">
         <Select
           id="sal-period"

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalcCard, CalcResult, Field, NumberInput, useMoney } from "../calc-kit";
+import { CalcCard, CalcResult, Field, NumberInput, MoneyField, useMoney } from "../calc-kit";
 
 export function BusinessCalculatorWidget() {
   const [price, setPrice] = useState(1500);
@@ -43,18 +43,24 @@ export function BusinessCalculatorWidget() {
         />
       }
     >
-      <Field label="Price per unit" htmlFor="biz-price">
-        <NumberInput id="biz-price" value={price} onValueChange={setPrice} />
-      </Field>
+<MoneyField label="Price per unit" htmlFor="biz-price" value={price} onValueChange={setPrice} />
       <Field label="Units sold per month" htmlFor="biz-units">
         <NumberInput id="biz-units" value={units} onValueChange={setUnits} />
       </Field>
-      <Field label="Variable cost per unit" htmlFor="biz-variable" help="Materials, fees, delivery">
-        <NumberInput id="biz-variable" value={variable} onValueChange={setVariable} />
-      </Field>
-      <Field label="Fixed costs per month" htmlFor="biz-fixed" help="Rent, salaries, software">
-        <NumberInput id="biz-fixed" value={fixed} onValueChange={setFixed} />
-      </Field>
+      <MoneyField
+        label="Variable cost per unit"
+        htmlFor="biz-variable"
+        value={variable}
+        onValueChange={setVariable}
+        help="Materials, fees, delivery"
+      />
+      <MoneyField
+        label="Fixed costs per month"
+        htmlFor="biz-fixed"
+        value={fixed}
+        onValueChange={setFixed}
+        help="Rent, salaries, software"
+      />
     </CalcCard>
   );
 }
